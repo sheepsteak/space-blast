@@ -21,7 +21,7 @@
 		"@typescript-eslint/eslint-plugin": "^5.60.1",
 		"@typescript-eslint/parser": "^5.60.1",
 		"@vitejs/plugin-basic-ssl": "^1.0.1",
-		"@vitejs/plugin-react": "^4.0.0",
+		"@vitejs/plugin-react": "^4.0.3",
 		"eslint": "^8.43.0",
 		"eslint-config-prettier": "^8.8.0",
 		"eslint-plugin-import": "^2.27.5",
@@ -35,6 +35,6 @@
 		"prettier": "^2.8.8",
 		"rooks": "^7.14.1",
 		"typescript": "^5.1.6",
-		"vite": "^4.3.9"
+		"vite": "^4.4.3"
 	}
 }
