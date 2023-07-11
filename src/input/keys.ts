@@ -1,4 +1,4 @@
-export type InputManager = {
+export interface InputManager {
 	keys: { [key in KeyCode]?: boolean };
 	mouse: {
 		x: number;
@@ -16,7 +16,7 @@ export type InputManager = {
 	mouseWheelDelta: number;
 	mouseWheelDeltaX: number;
 	mouseWheelDeltaY: number;
-};
+}
 
 export type KeyCode =
 	| "Backquote"

@@ -6,9 +6,9 @@ import { InputContext } from "./input/context";
 import type { InputManager } from "./input/keys";
 import { Stage } from "./stage";
 
-export type Props = {
+export interface Props {
 	inputManager: InputManager;
-};
+}
 
 export const Game: FC<Props> = ({ inputManager }) => {
 	return (

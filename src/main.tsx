@@ -3,9 +3,7 @@ import { Game } from "./game.tsx";
 import "./index.css";
 import { createInputManager } from "./input/keys.ts";
 
-const root = document.getElementById("root") as HTMLElement;
+const root = document.getElementById("root")!;
 const inputManager = createInputManager(root);
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-	<Game inputManager={inputManager} />,
-);
+ReactDOM.createRoot(root).render(<Game inputManager={inputManager} />);
