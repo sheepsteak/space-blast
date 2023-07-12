@@ -1,5 +1,7 @@
 import type { Friction } from "../../../components/friction";
 import { FrictionType } from "../../../components/friction";
+import type { MaxSpeed } from "../../../components/max-speed";
+import { MaxSpeedType } from "../../../components/max-speed";
 import type { Position } from "../../../components/position";
 import { PositionType } from "../../../components/position";
 import type { Velocity } from "../../../components/velocity";
@@ -23,11 +25,19 @@ export const createMoveSystem = (): System => {
 					const friction = getEntityComponent<Friction>(entity, FrictionType);
 					const position = getEntityComponent<Position>(entity, PositionType);
 					const velocity = getEntityComponent<Velocity>(entity, VelocityType);
+					let maxSpeed: MaxSpeed | undefined;
 
-					if (vector2Length(velocity.value) > 250) {
+					if (hasEntityComponents(entity, MaxSpeedType)) {
+						maxSpeed = getEntityComponent<MaxSpeed>(entity, MaxSpeedType);
+					}
+
+					if (
+						maxSpeed != null &&
+						vector2Length(velocity.value) > maxSpeed.value
+					) {
 						velocity.value = vector2Scale(
 							vector2Normalize(velocity.value),
-							250,
+							maxSpeed.value,
 						);
 					}
 

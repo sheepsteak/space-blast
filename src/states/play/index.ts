@@ -1,5 +1,6 @@
 import { createAcceleration } from "../../components/acceleration";
 import { createFriction } from "../../components/friction";
+import { createMaxSpeed } from "../../components/max-speed";
 import { createPosition } from "../../components/position";
 import { createRotation } from "../../components/rotation";
 import { createSprite } from "../../components/sprite";
@@ -47,7 +48,8 @@ export const createPlayState = ({
 	);
 	addEntityComponent(player, createRotation(toRadians(-90)));
 	addEntityComponent(player, createSprite("player"));
-	addEntityComponent(player, createVelocity({ x: 0, y: -0.1 }));
+	addEntityComponent(player, createVelocity({ x: 1, y: -1 }));
+	addEntityComponent(player, createMaxSpeed(1));
 
 	return {
 		update(delta) {
