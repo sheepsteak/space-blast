@@ -19,6 +19,7 @@ import {
 } from "../../ecs/world";
 import type { LoadSpritesResult } from "../../loader";
 import { toRadians } from "../../math";
+import { createBoundsSystem } from "./systems/bounds";
 import { createMoveSystem } from "./systems/move";
 import { createRenderSystem } from "./systems/render";
 
@@ -34,6 +35,7 @@ export const createPlayState = ({
 }: CreatePlayStateArgs): GameState => {
 	const world = createWorld();
 	addSystem(world, createMoveSystem());
+	addSystem(world, createBoundsSystem());
 	addRenderSystem(
 		world,
 		createRenderSystem({ htmlElement: root, spritesMap: sprites }),
