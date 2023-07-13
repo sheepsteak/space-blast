@@ -1,5 +1,6 @@
 import { createAcceleration } from "../../components/acceleration";
 import { createFriction } from "../../components/friction";
+import { createInput } from "../../components/input";
 import { createMaxSpeed } from "../../components/max-speed";
 import { createPosition } from "../../components/position";
 import { createRotation } from "../../components/rotation";
@@ -20,6 +21,7 @@ import {
 import type { LoadSpritesResult } from "../../loader";
 import { toRadians } from "../../math";
 import { createBoundsSystem } from "./systems/bounds";
+import { createInputCommandsSystem } from "./systems/input-commands";
 import { createMoveSystem } from "./systems/move";
 import { createRenderSystem } from "./systems/render";
 
@@ -30,10 +32,12 @@ export interface CreatePlayStateArgs {
 }
 
 export const createPlayState = ({
+	keyboardListener,
 	root,
 	sprites,
 }: CreatePlayStateArgs): GameState => {
 	const world = createWorld();
+	addSystem(world, createInputCommandsSystem({ keyboardListener }));
 	addSystem(world, createMoveSystem());
 	addSystem(world, createBoundsSystem());
 	addRenderSystem(
@@ -52,6 +56,7 @@ export const createPlayState = ({
 	addEntityComponent(player, createSprite("player"));
 	addEntityComponent(player, createVelocity({ x: 0, y: 0 }));
 	addEntityComponent(player, createMaxSpeed(300));
+	addEntityComponent(player, createInput(["Thrust", "TurnLeft", "TurnRight"]));
 
 	return {
 		update(delta) {
