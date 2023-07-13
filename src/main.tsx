@@ -21,8 +21,9 @@ gameStateManager.changeState(playState);
 
 let lastTime = 0;
 const tick: FrameRequestCallback = (time) => {
-	const delta = time - lastTime;
-	lastTime = time;
+	const timeInMs = time / 1000;
+	const delta = timeInMs - lastTime;
+	lastTime = timeInMs;
 	gameStateManager.update(delta);
 	gameStateManager.render(delta);
 	requestAnimationFrame(tick);
