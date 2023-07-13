@@ -1,3 +1,5 @@
+import type { Acceleration } from "../../../components/acceleration";
+import { AccelerationType } from "../../../components/acceleration";
 import type { Friction } from "../../../components/friction";
 import { FrictionType } from "../../../components/friction";
 import type { MaxSpeed } from "../../../components/max-speed";
@@ -19,9 +21,19 @@ export const createMoveSystem = (): System => {
 		execute: (entities, deltaTime) => {
 			entities
 				.filter((entity) =>
-					hasEntityComponents(entity, FrictionType, PositionType, VelocityType),
+					hasEntityComponents(
+						entity,
+						AccelerationType,
+						FrictionType,
+						PositionType,
+						VelocityType,
+					),
 				)
 				.forEach((entity) => {
+					const acceleration = getEntityComponent<Acceleration>(
+						entity,
+						AccelerationType,
+					);
 					const friction = getEntityComponent<Friction>(entity, FrictionType);
 					const position = getEntityComponent<Position>(entity, PositionType);
 					const velocity = getEntityComponent<Velocity>(entity, VelocityType);
@@ -30,6 +42,9 @@ export const createMoveSystem = (): System => {
 					if (hasEntityComponents(entity, MaxSpeedType)) {
 						maxSpeed = getEntityComponent<MaxSpeed>(entity, MaxSpeedType);
 					}
+
+					velocity.value.x += acceleration.value.x;
+					velocity.value.y += acceleration.value.y;
 
 					if (
 						maxSpeed != null &&
