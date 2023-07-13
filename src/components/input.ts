@@ -4,11 +4,13 @@ import type { InputCommand } from "../input";
 export const InputType = "INPUT";
 
 export type Input = {
+	availableCommands: InputCommand[];
 	commands: InputCommand[];
 	type: typeof InputType;
 } & Component;
 
-export const createInput = (commands: InputCommand[]): Input => ({
-	commands,
+export const createInput = (availableCommands: InputCommand[]): Input => ({
+	availableCommands,
+	commands: [],
 	type: InputType,
 });
