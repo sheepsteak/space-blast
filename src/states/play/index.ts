@@ -50,7 +50,7 @@ export const createPlayState = ({
 	);
 	addEntityComponent(player, createRotation(toRadians(-90)));
 	addEntityComponent(player, createSprite("player"));
-	addEntityComponent(player, createVelocity({ x: 0, y: -1 }));
+	addEntityComponent(player, createVelocity({ x: 0, y: 0 }));
 	addEntityComponent(player, createMaxSpeed(300));
 
 	return {
