@@ -6,9 +6,6 @@
 		"eslint:recommended",
 		"plugin:@typescript-eslint/recommended-type-checked",
 		"plugin:@typescript-eslint/stylistic-type-checked",
-		"plugin:react/recommended",
-		"plugin:react/jsx-runtime",
-		"plugin:react-hooks/recommended",
 		"plugin:prettier/recommended"
 	],
 	"parserOptions": {
@@ -16,7 +13,7 @@
 		"ecmaVersion": "latest",
 		"sourceType": "module"
 	},
-	"plugins": ["import", "react-refresh"],
+	"plugins": ["import"],
 	"root": true,
 	"rules": {
 		"@typescript-eslint/consistent-type-assertions": "warn",
@@ -28,13 +25,7 @@
 					"order": "asc"
 				}
 			}
-		],
-		"react-refresh/only-export-components": "warn"
-	},
-	"settings": {
-		"react": {
-			"version": "detect"
-		}
+		]
 	},
 	"overrides": [
 		{

@@ -1,12 +1,22 @@
 import bulletSprite from "./assets/images/bullet.png";
 import playerSprite from "./assets/images/player.png";
+import { setupContext } from "./canvas.ts";
+import { GAME_HEIGHT, GAME_WIDTH } from "./contants.ts";
 import { createKeyboardListener } from "./core/keys.ts";
 import { createGameStateManager } from "./core/state.ts";
 import "./index.css";
 import { loadSprites } from "./loader.ts";
 import { createPlayState } from "./states/play/index.ts";
 
-const root = document.getElementById("root")!;
+const game = document.getElementById("game") as HTMLCanvasElement;
+const context = game.getContext("2d");
+
+if (context == null) {
+	throw new Error("Unable to create 2D context");
+}
+
+setupContext(context, window.devicePixelRatio, GAME_HEIGHT, GAME_WIDTH);
+
 const keyboardListener = createKeyboardListener();
 const sprites = await loadSprites({
 	sprites: [
@@ -16,7 +26,7 @@ const sprites = await loadSprites({
 });
 
 const gameStateManager = createGameStateManager();
-const playState = createPlayState({ root, sprites, keyboardListener });
+const playState = createPlayState({ context, sprites, keyboardListener });
 gameStateManager.changeState(playState);
 
 let lastTime = 0;

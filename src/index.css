@@ -1,3 +1,8 @@
+:root {
+	--aspect-ratio-width: 1;
+	--aspect-ratio-height: 1;
+}
+
 *,
 *::before,
 *::after {
@@ -5,13 +10,25 @@
 }
 
 html {
+	background-color: #333;
 	height: 100%;
 }
 
-body,
-#root {
-	background-color: black;
-	margin: 0;
+body {
+	align-items: center;
+	display: flex;
 	height: 100%;
-	padding: 0;
+	justify-content: center;
+	margin: 0;
+	width: 100%;
+}
+
+#game {
+	aspect-ratio: var(--aspect-ratio-width) / var(--aspect-ratio-height);
+	height: calc(var(--aspect-ratio-height) / var(--aspect-ratio-width) * 100dvw);
+	background-color: black;
+	max-height: 100dvh;
+	max-width: calc(
+		var(--aspect-ratio-width) / var(--aspect-ratio-height) * 100dvh
+	);
 }

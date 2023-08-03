@@ -27,14 +27,14 @@ import { createMoveSystem } from "./systems/move";
 import { createRenderSystem } from "./systems/render";
 
 export interface CreatePlayStateArgs {
+	context: CanvasRenderingContext2D;
 	keyboardListener: KeyboardListener;
-	root: HTMLElement;
 	sprites: LoadSpritesResult;
 }
 
 export const createPlayState = ({
+	context,
 	keyboardListener,
-	root,
 	sprites,
 }: CreatePlayStateArgs): GameState => {
 	const world = createWorld();
@@ -42,10 +42,7 @@ export const createPlayState = ({
 	addSystem(world, createInputProcessSystem());
 	addSystem(world, createMoveSystem());
 	addSystem(world, createBoundsSystem());
-	addRenderSystem(
-		world,
-		createRenderSystem({ htmlElement: root, spritesMap: sprites }),
-	);
+	addRenderSystem(world, createRenderSystem({ context, sprites }));
 
 	const player = createEntity(world);
 	addEntityComponent(player, createAcceleration());
@@ -65,7 +62,13 @@ export const createPlayState = ({
 			update(world, delta);
 		},
 		render(delta) {
+			context.fillStyle = "black";
+			context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+			context.save();
+
 			render(world, delta);
+
+			context.restore();
 		},
 	};
 };
