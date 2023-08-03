@@ -1,4 +1,4 @@
-### Asteroids
+### Space Blast
 
 ## Install
 
