@@ -8,13 +8,13 @@ import type { Position } from "../../../components/position";
 import { PositionType } from "../../../components/position";
 import type { Velocity } from "../../../components/velocity";
 import { VelocityType } from "../../../components/velocity";
-import { getEntityComponent, hasEntityComponents } from "../../../ecs/entity";
-import type { System } from "../../../ecs/system";
 import {
 	vector2Length,
 	vector2Normalize,
 	vector2Scale,
-} from "../../../vector2";
+} from "../../../core/vector2";
+import { getEntityComponent, hasEntityComponents } from "../../../ecs/entity";
+import type { System } from "../../../ecs/system";
 
 export const createMoveSystem = (): System => {
 	return {

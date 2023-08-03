@@ -1,5 +1,5 @@
+import type { Vector2 } from "../core/vector2";
 import type { Component } from "../ecs/component";
-import type { Vector2 } from "../vector2";
 
 export const VelocityType = "VELOCITY";
 
