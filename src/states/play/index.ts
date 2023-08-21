@@ -55,7 +55,10 @@ export const createPlayState = ({
 	addEntityComponent(player, createSprite("player"));
 	addEntityComponent(player, createVelocity({ x: 0, y: 0 }));
 	addEntityComponent(player, createMaxSpeed(300));
-	addEntityComponent(player, createInput(["Thrust", "TurnLeft", "TurnRight"]));
+	addEntityComponent(
+		player,
+		createInput(["Fire", "Thrust", "TurnLeft", "TurnRight"]),
+	);
 
 	return {
 		update(delta) {
