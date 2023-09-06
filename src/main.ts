@@ -26,7 +26,7 @@ const sprites = await loadSprites({
 });
 
 const gameStateManager = createGameStateManager();
-const playState = createPlayState({ context, sprites, keyboardListener });
+const playState = createPlayState({ context, keyboardListener, sprites });
 gameStateManager.changeState(playState);
 
 let lastTime = 0;

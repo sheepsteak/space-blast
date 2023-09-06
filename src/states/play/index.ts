@@ -61,9 +61,6 @@ export const createPlayState = ({
 	);
 
 	return {
-		update(delta) {
-			update(world, delta);
-		},
 		render(delta) {
 			context.fillStyle = "black";
 			context.fillRect(0, 0, context.canvas.width, context.canvas.height);
@@ -72,6 +69,9 @@ export const createPlayState = ({
 			render(world, delta);
 
 			context.restore();
+		},
+		update(delta) {
+			update(world, delta);
 		},
 	};
 };

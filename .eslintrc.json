@@ -6,6 +6,7 @@
 		"eslint:recommended",
 		"plugin:@typescript-eslint/recommended-type-checked",
 		"plugin:@typescript-eslint/stylistic-type-checked",
+		"plugin:typescript-sort-keys/recommended",
 		"plugin:prettier/recommended"
 	],
 	"parserOptions": {
@@ -13,7 +14,7 @@
 		"ecmaVersion": "latest",
 		"sourceType": "module"
 	},
-	"plugins": ["import"],
+	"plugins": ["import", "sort-keys-fix"],
 	"root": true,
 	"rules": {
 		"@typescript-eslint/consistent-type-assertions": "warn",
@@ -24,6 +25,14 @@
 				"alphabetize": {
 					"order": "asc"
 				}
+			}
+		],
+		"sort-keys-fix/sort-keys-fix": [
+			"warn",
+			"asc",
+			{
+				"caseSensitive": false,
+				"natural": true
 			}
 		]
 	},

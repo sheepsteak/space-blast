@@ -18,8 +18,8 @@ export const createWorld = (): World => ({
 
 export const createEntity = (world: World): Entity => {
 	const entity = {
-		id: world.lastId++,
 		components: new Map<Component["type"], Component>(),
+		id: world.lastId++,
 	};
 	world.entities.push(entity);
 

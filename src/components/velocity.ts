@@ -4,11 +4,11 @@ import type { Component } from "../ecs/component";
 export const VelocityType = "VELOCITY";
 
 export type Velocity = {
-	value: Vector2;
 	type: typeof VelocityType;
+	value: Vector2;
 } & Component;
 
 export const createVelocity = (value: Vector2): Velocity => ({
-	value,
 	type: VelocityType,
+	value,
 });

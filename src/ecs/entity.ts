@@ -1,8 +1,8 @@
 import type { Component } from "./component";
 
 export interface Entity {
-	readonly id: number;
 	readonly components: Map<Component["type"], Component>;
+	readonly id: number;
 }
 
 export const addEntityComponent = (
