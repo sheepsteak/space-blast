@@ -4,6 +4,8 @@ import type { Input } from "../../../components/input";
 import { InputType } from "../../../components/input";
 import type { Rotation } from "../../../components/rotation";
 import { RotationType } from "../../../components/rotation";
+import type { Weapon } from "../../../components/weapon";
+import { WeaponType } from "../../../components/weapon";
 import { getEntityComponent, hasEntityComponents } from "../../../ecs/entity";
 import type { System } from "../../../ecs/system";
 
@@ -46,6 +48,17 @@ export const createInputProcessSystem = (): System => {
 					} else {
 						acceleration.value.x = 0;
 						acceleration.value.y = 0;
+					}
+
+					const weapon = getEntityComponent<Weapon>(entity, WeaponType);
+
+					if (weapon.lastFired > 0) {
+						weapon.lastFired -= deltaTime;
+					}
+
+					if (input.commands.includes("Fire") && weapon.lastFired <= 0) {
+						weapon.lastFired = weapon.fireRate;
+						console.log("FIRE!");
 					}
 				});
 		},

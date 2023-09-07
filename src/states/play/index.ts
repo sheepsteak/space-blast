@@ -6,6 +6,7 @@ import { createPosition } from "../../components/position";
 import { createRotation } from "../../components/rotation";
 import { createSprite } from "../../components/sprite";
 import { createVelocity } from "../../components/velocity";
+import { createWeapon } from "../../components/weapon";
 import { GAME_HEIGHT, GAME_WIDTH } from "../../contants";
 import type { KeyboardListener } from "../../core/keys";
 import type { GameState } from "../../core/state";
@@ -59,6 +60,7 @@ export const createPlayState = ({
 		player,
 		createInput(["Fire", "Thrust", "TurnLeft", "TurnRight"]),
 	);
+	addEntityComponent(player, createWeapon(0.3));
 
 	return {
 		render(delta) {
