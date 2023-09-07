@@ -1,26 +1,15 @@
-import { createAcceleration } from "../../components/acceleration";
-import { createFriction } from "../../components/friction";
-import { createInput } from "../../components/input";
-import { createMaxSpeed } from "../../components/max-speed";
-import { createPosition } from "../../components/position";
-import { createRotation } from "../../components/rotation";
-import { createSprite } from "../../components/sprite";
-import { createVelocity } from "../../components/velocity";
-import { createWeapon } from "../../components/weapon";
 import { GAME_HEIGHT, GAME_WIDTH } from "../../contants";
 import type { KeyboardListener } from "../../core/keys";
 import type { GameState } from "../../core/state";
-import { addEntityComponent } from "../../ecs/entity";
 import {
 	addRenderSystem,
 	addSystem,
-	createEntity,
 	createWorld,
 	render,
 	update,
 } from "../../ecs/world";
 import type { LoadSpritesResult } from "../../loader";
-import { toRadians } from "../../math";
+import { createPlayer } from "./entities";
 import { createBoundsSystem } from "./systems/bounds";
 import { createInputCommandsSystem } from "./systems/input-commands";
 import { createInputProcessSystem } from "./systems/input-process";
@@ -45,22 +34,7 @@ export const createPlayState = ({
 	addSystem(world, createBoundsSystem());
 	addRenderSystem(world, createRenderSystem({ context, sprites }));
 
-	const player = createEntity(world);
-	addEntityComponent(player, createAcceleration());
-	addEntityComponent(player, createFriction(0.99));
-	addEntityComponent(
-		player,
-		createPosition({ x: GAME_WIDTH / 2, y: GAME_HEIGHT / 2 }),
-	);
-	addEntityComponent(player, createRotation(toRadians(-90)));
-	addEntityComponent(player, createSprite("player"));
-	addEntityComponent(player, createVelocity({ x: 0, y: 0 }));
-	addEntityComponent(player, createMaxSpeed(300));
-	addEntityComponent(
-		player,
-		createInput(["Fire", "Thrust", "TurnLeft", "TurnRight"]),
-	);
-	addEntityComponent(player, createWeapon(0.3));
+	createPlayer(world, GAME_WIDTH / 2, GAME_HEIGHT / 2);
 
 	return {
 		render(delta) {
