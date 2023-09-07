@@ -14,7 +14,7 @@
 		"ecmaVersion": "latest",
 		"sourceType": "module"
 	},
-	"plugins": ["import", "sort-keys-fix"],
+	"plugins": ["import", "sort-keys-fix", "sort-destructure-keys"],
 	"root": true,
 	"rules": {
 		"@typescript-eslint/consistent-type-assertions": "warn",
@@ -25,6 +25,12 @@
 				"alphabetize": {
 					"order": "asc"
 				}
+			}
+		],
+		"sort-destructure-keys/sort-destructure-keys": [
+			"warn",
+			{
+				"caseSensitive": false
 			}
 		],
 		"sort-keys-fix/sort-keys-fix": [
