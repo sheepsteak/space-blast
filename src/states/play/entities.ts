@@ -13,12 +13,24 @@ import type { World } from "../../ecs/world";
 import { createEntity } from "../../ecs/world";
 import { toRadians } from "../../math";
 
-export const createPlayer = (world: World, x: number, y: number): Entity => {
+export interface CreatePlayerArgs {
+	rotation: number;
+	world: World;
+	x: number;
+	y: number;
+}
+
+export const createPlayerEntity = ({
+	rotation,
+	world,
+	x,
+	y,
+}: CreatePlayerArgs): Entity => {
 	const player = createEntity(world);
 	addEntityComponent(player, createAcceleration());
 	addEntityComponent(player, createFriction(0.99));
 	addEntityComponent(player, createPosition({ x, y }));
-	addEntityComponent(player, createRotation(toRadians(-90)));
+	addEntityComponent(player, createRotation(toRadians(rotation)));
 	addEntityComponent(player, createSprite("player"));
 	addEntityComponent(player, createVelocity({ x: 0, y: 0 }));
 	addEntityComponent(player, createMaxSpeed(300));

@@ -9,7 +9,7 @@ import {
 	update,
 } from "../../ecs/world";
 import type { LoadSpritesResult } from "../../loader";
-import { createPlayer } from "./entities";
+import { createPlayerEntity } from "./entities";
 import { createBoundsSystem } from "./systems/bounds";
 import { createInputCommandsSystem } from "./systems/input-commands";
 import { createInputProcessSystem } from "./systems/input-process";
@@ -34,7 +34,12 @@ export const createPlayState = ({
 	addSystem(world, createBoundsSystem());
 	addRenderSystem(world, createRenderSystem({ context, sprites }));
 
-	createPlayer(world, GAME_WIDTH / 2, GAME_HEIGHT / 2);
+	createPlayerEntity({
+		rotation: -90,
+		world,
+		x: GAME_WIDTH / 2,
+		y: GAME_HEIGHT / 2,
+	});
 
 	return {
 		render(delta) {
