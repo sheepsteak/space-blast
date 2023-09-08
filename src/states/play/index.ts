@@ -29,7 +29,7 @@ export const createPlayState = ({
 }: CreatePlayStateArgs): GameState => {
 	const world = createWorld();
 	addSystem(world, createInputCommandsSystem({ keyboardListener }));
-	addSystem(world, createInputProcessSystem());
+	addSystem(world, createInputProcessSystem({ world }));
 	addSystem(world, createMoveSystem());
 	addSystem(world, createBoundsSystem());
 	addRenderSystem(world, createRenderSystem({ context, sprites }));

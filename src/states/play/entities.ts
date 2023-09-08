@@ -67,7 +67,7 @@ export const createPlayerEntity = ({
 		player,
 		createInput(["Fire", "Thrust", "TurnLeft", "TurnRight"]),
 	);
-	addEntityComponent(player, createWeapon(0.3));
+	addEntityComponent(player, createWeapon(0.5));
 
 	return player;
 };

@@ -2,18 +2,28 @@ import type { Acceleration } from "../../../components/acceleration";
 import { AccelerationType } from "../../../components/acceleration";
 import type { Input } from "../../../components/input";
 import { InputType } from "../../../components/input";
+import type { Position } from "../../../components/position";
+import { PositionType } from "../../../components/position";
 import type { Rotation } from "../../../components/rotation";
 import { RotationType } from "../../../components/rotation";
 import type { Weapon } from "../../../components/weapon";
 import { WeaponType } from "../../../components/weapon";
 import { getEntityComponent, hasEntityComponents } from "../../../ecs/entity";
 import type { System } from "../../../ecs/system";
+import type { World } from "../../../ecs/world";
+import { createPlayerBulletEntity } from "../entities";
 
 // TODO: Move these to a component?
 const ROTATION_SPEED = 5;
 const ACCELERATION = 750;
 
-export const createInputProcessSystem = (): System => {
+export interface CreateInputProcessSystemArgs {
+	world: World;
+}
+
+export const createInputProcessSystem = ({
+	world,
+}: CreateInputProcessSystemArgs): System => {
 	return {
 		execute: (entities, deltaTime) => {
 			entities
@@ -58,7 +68,15 @@ export const createInputProcessSystem = (): System => {
 
 					if (input.commands.includes("Fire") && weapon.lastFired <= 0) {
 						weapon.lastFired = weapon.fireRate;
-						console.log("FIRE!");
+						const position = getEntityComponent<Position>(entity, PositionType);
+						createPlayerBulletEntity({
+							dx: Math.cos(rotation.value) * 200,
+							dy: Math.sin(rotation.value) * 200,
+							rotation: rotation.value,
+							world: world,
+							x: position.value.x,
+							y: position.value.y,
+						});
 					}
 				});
 		},
