@@ -16,7 +16,40 @@ import type { World } from "../../ecs/world";
 import { createEntity } from "../../ecs/world";
 import { toRadians } from "../../math";
 
+const ASTEROID_SPEED = 100;
 const PLAYER_BULLET_SPEED = 500;
+
+export interface CreateAsteroidArgs {
+	rotation: number;
+	world: World;
+	x: number;
+	y: number;
+}
+
+export const createAsteroidEntity = ({
+	rotation,
+	world,
+	x,
+	y,
+}: CreateAsteroidArgs): Entity => {
+	const asteroid = createEntity(world);
+	addEntityComponent(asteroid, createAcceleration());
+	addEntityComponent(asteroid, createFriction(1));
+	addEntityComponent(asteroid, createPosition({ x, y }));
+	addEntityComponent(asteroid, createRotation(toRadians(rotation)));
+	addEntityComponent(asteroid, createSize({ x: 64, y: 64 }));
+	addEntityComponent(asteroid, createSprite("asteroid"));
+	addEntityComponent(
+		asteroid,
+		createVelocity({
+			x: Math.cos(rotation) * ASTEROID_SPEED,
+			y: Math.sin(rotation) * ASTEROID_SPEED,
+		}),
+	);
+
+	return asteroid;
+};
+
 export interface CreateBulletArgs {
 	rotation: number;
 	world: World;
