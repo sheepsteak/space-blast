@@ -15,9 +15,8 @@ import type { World } from "../../ecs/world";
 import { createEntity } from "../../ecs/world";
 import { toRadians } from "../../math";
 
+const PLAYER_BULLET_SPEED = 500;
 export interface CreateBulletArgs {
-	dx: number;
-	dy: number;
 	rotation: number;
 	world: World;
 	x: number;
@@ -25,8 +24,7 @@ export interface CreateBulletArgs {
 }
 
 export const createPlayerBulletEntity = ({
-	dx,
-	dy,
+	rotation,
 	world,
 	x,
 	y,
@@ -37,9 +35,15 @@ export const createPlayerBulletEntity = ({
 	addEntityComponent(bullet, createLifetime(2));
 	addEntityComponent(bullet, createPlayerBullet());
 	addEntityComponent(bullet, createPosition({ x, y }));
-	addEntityComponent(bullet, createRotation(toRadians(-90)));
+	addEntityComponent(bullet, createRotation(toRadians(rotation)));
 	addEntityComponent(bullet, createSprite("bullet"));
-	addEntityComponent(bullet, createVelocity({ x: dx, y: dy }));
+	addEntityComponent(
+		bullet,
+		createVelocity({
+			x: Math.cos(rotation) * PLAYER_BULLET_SPEED,
+			y: Math.sin(rotation) * PLAYER_BULLET_SPEED,
+		}),
+	);
 
 	return bullet;
 };

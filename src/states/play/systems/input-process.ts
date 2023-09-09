@@ -70,8 +70,6 @@ export const createInputProcessSystem = ({
 						weapon.lastFired = weapon.fireRate;
 						const position = getEntityComponent<Position>(entity, PositionType);
 						createPlayerBulletEntity({
-							dx: Math.cos(rotation.value) * 200,
-							dy: Math.sin(rotation.value) * 200,
 							rotation: rotation.value,
 							world: world,
 							x: position.value.x,
