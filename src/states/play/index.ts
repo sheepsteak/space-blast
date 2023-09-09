@@ -13,6 +13,7 @@ import { createPlayerEntity } from "./entities";
 import { createBoundsSystem } from "./systems/bounds";
 import { createInputCommandsSystem } from "./systems/input-commands";
 import { createInputProcessSystem } from "./systems/input-process";
+import { createLifetimeSystem } from "./systems/lifetime";
 import { createMoveSystem } from "./systems/move";
 import { createRenderSystem } from "./systems/render";
 
@@ -28,6 +29,7 @@ export const createPlayState = ({
 	sprites,
 }: CreatePlayStateArgs): GameState => {
 	const world = createWorld();
+	addSystem(world, createLifetimeSystem({ world }));
 	addSystem(world, createInputCommandsSystem({ keyboardListener }));
 	addSystem(world, createInputProcessSystem({ world }));
 	addSystem(world, createMoveSystem());
