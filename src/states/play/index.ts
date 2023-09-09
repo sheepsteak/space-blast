@@ -45,8 +45,7 @@ export const createPlayState = ({
 
 	return {
 		render(delta) {
-			context.fillStyle = "black";
-			context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+			context.drawImage(sprites.background, 0, 0, GAME_WIDTH, GAME_HEIGHT);
 			context.save();
 
 			render(world, delta);

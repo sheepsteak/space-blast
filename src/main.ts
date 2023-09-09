@@ -1,3 +1,4 @@
+import backgroundSprite from "./assets/images/background.jpg";
 import bulletSprite from "./assets/images/bullet.png";
 import playerSprite from "./assets/images/player.png";
 import { setupContext } from "./canvas.ts";
@@ -20,6 +21,7 @@ setupContext(context, window.devicePixelRatio, GAME_HEIGHT, GAME_WIDTH);
 const keyboardListener = createKeyboardListener();
 const sprites = await loadSprites({
 	sprites: [
+		["background", backgroundSprite],
 		["bullet", bulletSprite],
 		["player", playerSprite],
 	],
