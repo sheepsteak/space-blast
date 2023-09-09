@@ -26,6 +26,10 @@ export const createEntity = (world: World): Entity => {
 	return entity;
 };
 
+export const removeEntity = (world: World, entity: Entity): void => {
+	world.entities.splice(world.entities.indexOf(entity), 1);
+};
+
 export const addRenderSystem = (world: World, system: System): World => {
 	world.renderSystems.push(system);
 
