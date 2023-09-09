@@ -1,3 +1,4 @@
+import asteroidSprite from "./assets/images/asteroid.png";
 import backgroundSprite from "./assets/images/background.jpg";
 import bulletSprite from "./assets/images/bullet.png";
 import playerSprite from "./assets/images/player.png";
@@ -21,6 +22,7 @@ setupContext(context, window.devicePixelRatio, GAME_HEIGHT, GAME_WIDTH);
 const keyboardListener = createKeyboardListener();
 const sprites = await loadSprites({
 	sprites: [
+		["asteroid", asteroidSprite],
 		["background", backgroundSprite],
 		["bullet", bulletSprite],
 		["player", playerSprite],
