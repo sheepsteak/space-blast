@@ -1,6 +1,7 @@
 import { createAcceleration } from "../../components/acceleration";
 import { createFriction } from "../../components/friction";
 import { createInput } from "../../components/input";
+import { createLifetime } from "../../components/lifetime";
 import { createMaxSpeed } from "../../components/max-speed";
 import { createPlayerBullet } from "../../components/player-bullet";
 import { createPosition } from "../../components/position";
@@ -33,6 +34,7 @@ export const createPlayerBulletEntity = ({
 	const bullet = createEntity(world);
 	addEntityComponent(bullet, createAcceleration());
 	addEntityComponent(bullet, createFriction(1));
+	addEntityComponent(bullet, createLifetime(2));
 	addEntityComponent(bullet, createPlayerBullet());
 	addEntityComponent(bullet, createPosition({ x, y }));
 	addEntityComponent(bullet, createRotation(toRadians(-90)));
