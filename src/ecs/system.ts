@@ -1,5 +1,5 @@
 import type { Entity } from "./entity";
 
-export interface System {
+export type System = {
 	execute: (entities: Entity[], deltaTime: number) => void;
-}
+};

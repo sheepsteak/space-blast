@@ -19,12 +19,12 @@ import { toRadians } from "../../math";
 const ASTEROID_SPEED = 100;
 const PLAYER_BULLET_SPEED = 500;
 
-export interface CreateAsteroidArgs {
+export type CreateAsteroidArgs = {
 	rotation: number;
 	world: World;
 	x: number;
 	y: number;
-}
+};
 
 export const createAsteroidEntity = ({
 	rotation,
@@ -50,12 +50,12 @@ export const createAsteroidEntity = ({
 	return asteroid;
 };
 
-export interface CreateBulletArgs {
+export type CreateBulletArgs = {
 	rotation: number;
 	world: World;
 	x: number;
 	y: number;
-}
+};
 
 export const createPlayerBulletEntity = ({
 	rotation,
@@ -83,12 +83,12 @@ export const createPlayerBulletEntity = ({
 	return bullet;
 };
 
-export interface CreatePlayerArgs {
+export type CreatePlayerArgs = {
 	rotation: number;
 	world: World;
 	x: number;
 	y: number;
-}
+};
 
 export const createPlayerEntity = ({
 	rotation,

@@ -5,9 +5,9 @@ import type { System } from "../../../ecs/system";
 import type { World } from "../../../ecs/world";
 import { removeEntity } from "../../../ecs/world";
 
-export interface CreateLifetimeSystemArgs {
+export type CreateLifetimeSystemArgs = {
 	world: World;
-}
+};
 
 export const createLifetimeSystem = ({
 	world,

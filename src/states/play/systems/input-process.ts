@@ -17,9 +17,9 @@ import { createPlayerBulletEntity } from "../entities";
 const ROTATION_SPEED = 5;
 const ACCELERATION = 750;
 
-export interface CreateInputProcessSystemArgs {
+export type CreateInputProcessSystemArgs = {
 	world: World;
-}
+};
 
 export const createInputProcessSystem = ({
 	world,

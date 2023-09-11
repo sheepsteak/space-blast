@@ -10,10 +10,10 @@ import { hasEntityComponents, getEntityComponent } from "../../../ecs/entity";
 import type { System } from "../../../ecs/system";
 import type { LoadSpritesResult } from "../../../loader";
 
-export interface CreateRenderSystemArgs {
+export type CreateRenderSystemArgs = {
 	context: CanvasRenderingContext2D;
 	sprites: LoadSpritesResult;
-}
+};
 
 export const createRenderSystem = ({
 	context,

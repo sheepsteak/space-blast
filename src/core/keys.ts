@@ -126,9 +126,9 @@ export type KeyCode =
 	| "ScrollLock"
 	| "Pause";
 
-export interface KeyboardListener {
+export type KeyboardListener = {
 	isPressed: (key: KeyCode) => boolean;
-}
+};
 
 export const createKeyboardListener = (): KeyboardListener => {
 	const keys: Keys = {};

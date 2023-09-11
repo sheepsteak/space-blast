@@ -1,6 +1,6 @@
-export interface LoadSpritesArgs {
+export type LoadSpritesArgs = {
 	sprites: [string, string][];
-}
+};
 
 export type LoadSpritesResult = Record<string, HTMLImageElement>;
 

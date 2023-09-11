@@ -17,11 +17,11 @@ import { createLifetimeSystem } from "./systems/lifetime";
 import { createMoveSystem } from "./systems/move";
 import { createRenderSystem } from "./systems/render";
 
-export interface CreatePlayStateArgs {
+export type CreatePlayStateArgs = {
 	context: CanvasRenderingContext2D;
 	keyboardListener: KeyboardListener;
 	sprites: LoadSpritesResult;
-}
+};
 
 export const createPlayState = ({
 	context,

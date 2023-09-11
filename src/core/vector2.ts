@@ -1,7 +1,7 @@
-export interface Vector2 {
+export type Vector2 = {
 	x: number;
 	y: number;
-}
+};
 
 export const vector2Create = (x: number, y: number): Vector2 => ({
 	x,

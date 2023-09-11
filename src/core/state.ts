@@ -1,13 +1,13 @@
-export interface GameState {
+export type GameState = {
 	render: (delta: number) => void;
 	update: (delta: number) => void;
-}
+};
 
-export interface GameStateManager {
+export type GameStateManager = {
 	changeState: (state: GameState) => void;
 	render: (delta: number) => void;
 	update: (delta: number) => void;
-}
+};
 
 export const createGameStateManager = (): GameStateManager => {
 	let currentState: GameState | null = null;

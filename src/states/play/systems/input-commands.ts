@@ -5,9 +5,9 @@ import { getEntityComponent, hasEntityComponents } from "../../../ecs/entity";
 import type { System } from "../../../ecs/system";
 import { mappings } from "../../../input";
 
-export interface CreateInputCommandsSystemArgs {
+export type CreateInputCommandsSystemArgs = {
 	keyboardListener: KeyboardListener;
-}
+};
 
 export const createInputCommandsSystem = ({
 	keyboardListener,

@@ -2,12 +2,12 @@ import type { Component } from "./component";
 import type { Entity } from "./entity";
 import type { System } from "./system";
 
-export interface World {
+export type World = {
 	entities: Entity[];
 	lastId: number;
 	renderSystems: System[];
 	systems: System[];
-}
+};
 
 export const createWorld = (): World => ({
 	entities: [],
