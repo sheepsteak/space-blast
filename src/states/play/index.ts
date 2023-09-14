@@ -15,6 +15,7 @@ import {
 import type { LoadSpritesResult } from "../../loader";
 import { createPlayerEntity } from "./entities";
 import { GameStart } from "./events";
+import { createAsteroidSpawnerSystem } from "./systems/asteroid-spawner";
 import { createBoundsSystem } from "./systems/bounds";
 import { createGameSystem } from "./systems/game-system";
 import { createInputCommandsSystem } from "./systems/input-commands";
@@ -36,6 +37,7 @@ export const createPlayState = ({
 }: CreatePlayStateArgs): GameState => {
 	const world = createWorld();
 	addSystem(world, createGameSystem({ world }));
+	addSystem(world, createAsteroidSpawnerSystem({ world }));
 	addSystem(world, createLifetimeSystem({ world }));
 	addSystem(world, createInputCommandsSystem({ keyboardListener }));
 	addSystem(world, createInputProcessSystem({ world }));
