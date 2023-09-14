@@ -1,3 +1,5 @@
+import type { Game } from "../../../components/game";
+import { GameType } from "../../../components/game";
 import type { Position } from "../../../components/position";
 import { PositionType } from "../../../components/position";
 import type { Rotation } from "../../../components/rotation";
@@ -50,5 +52,22 @@ export const createRenderSystem = ({
 				);
 				context.restore();
 			});
+
+		const gameEntity = entities.find((entity) =>
+			hasEntityComponents(entity, GameType),
+		);
+
+		if (!gameEntity) {
+			throw new Error("Game entity not found");
+		}
+
+		const game = getEntityComponent<Game>(gameEntity, GameType);
+
+		context.save();
+		context.font = "20px Courier New";
+		context.fillStyle = "white";
+		context.fillText(`Score: ${game.score}`, 10, 30);
+		context.fillText(`Lives: ${game.lives}`, 10, 60);
+		context.restore();
 	},
 });
