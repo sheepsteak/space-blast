@@ -1,4 +1,5 @@
 import { createAcceleration } from "../../components/acceleration";
+import { createAsteroid } from "../../components/asteroid";
 import { createFriction } from "../../components/friction";
 import { createInput } from "../../components/input";
 import { createLifetime } from "../../components/lifetime";
@@ -21,6 +22,7 @@ const PLAYER_BULLET_SPEED = 400;
 
 export type CreateAsteroidArgs = {
 	rotation: number;
+	type: "small" | "medium" | "large";
 	world: World;
 	x: number;
 	y: number;
@@ -28,16 +30,20 @@ export type CreateAsteroidArgs = {
 
 export const createAsteroidEntity = ({
 	rotation,
+	type,
 	world,
 	x,
 	y,
 }: CreateAsteroidArgs): Entity => {
+	const size = type === "small" ? 16 : type === "medium" ? 32 : 64;
+
 	const asteroid = createEntity(world);
 	addEntityComponent(asteroid, createAcceleration());
+	addEntityComponent(asteroid, createAsteroid());
 	addEntityComponent(asteroid, createFriction(1));
 	addEntityComponent(asteroid, createPosition({ x, y }));
-	addEntityComponent(asteroid, createRotation(toRadians(rotation)));
-	addEntityComponent(asteroid, createSize({ x: 64, y: 64 }));
+	addEntityComponent(asteroid, createRotation(rotation));
+	addEntityComponent(asteroid, createSize({ x: size, y: size }));
 	addEntityComponent(asteroid, createSprite("asteroid"));
 	addEntityComponent(
 		asteroid,
