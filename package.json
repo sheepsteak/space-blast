@@ -8,7 +8,7 @@
 		"build": "tsc && vite build",
 		"lint": "eslint . --report-unused-disable-directives --max-warnings 0",
 		"preview": "vite preview",
-		"prepare": "husky install",
+		"prepare": "npx yarn-deduplicate && husky install",
 		"test": "tsx --test src/**/*.test.ts",
 		"test:watch": "tsx --test --watch src/**/*.test.ts"
 	},
