@@ -49,6 +49,12 @@
 			"parserOptions": {
 				"project": "./tsconfig.node.json"
 			}
+		},
+		{
+			"files": ["*.test.ts"],
+			"rules": {
+				"@typescript-eslint/no-floating-promises": "off"
+			}
 		}
 	]
 }

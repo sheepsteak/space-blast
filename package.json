@@ -8,10 +8,13 @@
 		"build": "tsc && vite build",
 		"lint": "eslint . --report-unused-disable-directives --max-warnings 0",
 		"preview": "vite preview",
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"test": "tsx --test src/**/*.test.ts",
+		"test:watch": "tsx --test --watch src/**/*.test.ts"
 	},
 	"dependencies": {},
 	"devDependencies": {
+		"@types/node": "^20",
 		"@typescript-eslint/eslint-plugin": "^6.6.0",
 		"@typescript-eslint/parser": "^6.6.0",
 		"@vitejs/plugin-basic-ssl": "^1.0.1",
@@ -25,6 +28,7 @@
 		"husky": "^8.0.3",
 		"lint-staged": "^14.0.1",
 		"prettier": "^3.0.3",
+		"tsx": "^3.13.0",
 		"typescript": "^5.2.2",
 		"vite": "^4.4.9"
 	}
