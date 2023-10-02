@@ -1,4 +1,4 @@
-### Space Blast
+# Space Blast
 
 ## Install
 
