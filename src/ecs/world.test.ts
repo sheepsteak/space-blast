@@ -4,7 +4,7 @@ import type { System } from "./system";
 import {
 	createEntity,
 	createWorld,
-	dispatchWorldEvent,
+	queueEvent,
 	subscribe,
 	update,
 } from "./world";
@@ -46,7 +46,7 @@ describe("dispatchWorldEvent", () => {
 		assert.strictEqual(world.events.length, 0);
 		const event = new Event("test");
 
-		dispatchWorldEvent(world, event);
+		queueEvent(world, event);
 
 		assert.strictEqual(world.events.length, 1);
 	});
@@ -60,7 +60,7 @@ describe("update", () => {
 			subscribe(world, "test", () => resolve());
 		});
 
-		dispatchWorldEvent(world, event);
+		queueEvent(world, event);
 		assert.strictEqual(world.events.length, 1);
 
 		update(world, 0);
@@ -76,12 +76,12 @@ describe("update", () => {
 		const listener = new Promise<void>((resolve) => {
 			subscribe(world, "test1", () => {
 				// Dispatch a new event during the event dispatch
-				dispatchWorldEvent(world, event2);
+				queueEvent(world, event2);
 				resolve();
 			});
 		});
 
-		dispatchWorldEvent(world, event1);
+		queueEvent(world, event1);
 		assert.strictEqual(world.events.length, 1);
 		assert.strictEqual(world.events[0], event1);
 		update(world, 0);

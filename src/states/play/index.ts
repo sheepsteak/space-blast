@@ -8,7 +8,7 @@ import {
 	addSystem,
 	createEntity,
 	createWorld,
-	dispatchWorldEvent,
+	queueEvent,
 	render,
 	update,
 } from "../../ecs/world";
@@ -54,7 +54,7 @@ export const createPlayState = ({
 		y: GAME_HEIGHT / 2,
 	});
 
-	dispatchWorldEvent(world, new GameStart());
+	queueEvent(world, new GameStart());
 
 	return {
 		render(delta) {
