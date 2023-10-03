@@ -5,7 +5,7 @@ import { getEntityComponent, hasEntityComponents } from "../../../ecs/entity";
 import type { System } from "../../../ecs/system";
 import { subscribe, type World } from "../../../ecs/world";
 import { createAsteroidEntity } from "../entities";
-import { LevelStart } from "../events";
+import { LevelStartEvent } from "../events";
 
 export type CreateAsteroidSpawnerSystemArgs = {
 	world: World;
@@ -36,7 +36,7 @@ export const createAsteroidSpawnerSystem = ({
 		}
 	};
 
-	subscribe(world, LevelStart.type, handleLevelStart);
+	subscribe(world, LevelStartEvent.type, handleLevelStart);
 
 	return {
 		execute: () => {

@@ -8,14 +8,14 @@ import {
 	type World,
 	type WorldEventListener,
 } from "../../../ecs/world";
-import { GameStart, LevelStart } from "../events";
+import { GameStartEvent, LevelStartEvent } from "../events";
 
 export type CreateGameSystemArgs = {
 	world: World;
 };
 
 export const createGameSystem = ({ world }: CreateGameSystemArgs): System => {
-	const handleGameStart: WorldEventListener<GameStart> = () => {
+	const handleGameStart: WorldEventListener<GameStartEvent> = () => {
 		const gameEntity = world.entities.find((entity) =>
 			hasEntityComponent(entity, GameType),
 		);
@@ -29,10 +29,10 @@ export const createGameSystem = ({ world }: CreateGameSystemArgs): System => {
 		game.hasStarted = true;
 		game.level = 1;
 
-		queueEvent(world, new LevelStart(1));
+		queueEvent(world, new LevelStartEvent(1));
 	};
 
-	subscribe(world, GameStart.type, handleGameStart);
+	subscribe(world, GameStartEvent.type, handleGameStart);
 
 	return {
 		execute: (entities, deltaTime) => {

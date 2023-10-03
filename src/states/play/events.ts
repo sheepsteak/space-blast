@@ -1,4 +1,4 @@
-export class GameStart extends Event {
+export class GameStartEvent extends Event {
 	static type = "gamestart";
 
 	constructor() {
@@ -6,7 +6,7 @@ export class GameStart extends Event {
 	}
 }
 
-export class LevelStart extends Event {
+export class LevelStartEvent extends Event {
 	static type = "levelstart";
 
 	readonly level: number;

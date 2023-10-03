@@ -14,7 +14,7 @@ import {
 } from "../../ecs/world";
 import type { LoadSpritesResult } from "../../loader";
 import { createPlayerEntity } from "./entities";
-import { GameStart } from "./events";
+import { GameStartEvent } from "./events";
 import { createAsteroidSpawnerSystem } from "./systems/asteroid-spawner";
 import { createBoundsSystem } from "./systems/bounds";
 import { createGameSystem } from "./systems/game-system";
@@ -54,7 +54,7 @@ export const createPlayState = ({
 		y: GAME_HEIGHT / 2,
 	});
 
-	queueEvent(world, new GameStart());
+	queueEvent(world, new GameStartEvent());
 
 	return {
 		render(delta) {
