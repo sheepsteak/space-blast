@@ -3,7 +3,7 @@ import { GameType } from "../../../components/game";
 import { getEntityComponent, hasEntityComponent } from "../../../ecs/entity";
 import type { System } from "../../../ecs/system";
 import {
-	dispatchEvent,
+	dispatchWorldEvent,
 	subscribe,
 	type World,
 	type WorldEventListener,
@@ -29,7 +29,7 @@ export const createGameSystem = ({ world }: CreateGameSystemArgs): System => {
 		game.hasStarted = true;
 		game.level = 1;
 
-		dispatchEvent(world, new LevelStart(1));
+		dispatchWorldEvent(world, new LevelStart(1));
 	};
 
 	subscribe(world, GameStart.type, handleGameStart);

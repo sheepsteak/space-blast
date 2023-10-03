@@ -72,7 +72,7 @@ export const unsubscribe = <TEvent extends Event>(
 	world.eventEmitter.removeEventListener(type, listener as EventListener);
 };
 
-export const dispatchEvent = <TEvent extends Event>(
+export const dispatchWorldEvent = <TEvent extends Event>(
 	world: World,
 	event: TEvent,
 ): void => {
