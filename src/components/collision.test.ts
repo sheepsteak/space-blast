@@ -1,5 +1,4 @@
-import assert from "node:assert";
-import { describe, it } from "node:test";
+import { describe, expect, it } from "@jest/globals";
 import {
 	collisionLayer1,
 	collisionLayer2,
@@ -15,11 +14,13 @@ describe("createCollision", () => {
 			mask: [collisionLayer2],
 		});
 
-		assert.deepStrictEqual(collision, {
-			layer: 1,
-			mask: 2,
-			type: "COLLISION",
-		});
+		expect(collision).toMatchInlineSnapshot(`
+		{
+		  "layer": 1,
+		  "mask": 2,
+		  "type": "COLLISION",
+		}
+	`);
 	});
 
 	it("returns a Collision component with multiple masks", () => {
@@ -33,10 +34,12 @@ describe("createCollision", () => {
 			],
 		});
 
-		assert.deepStrictEqual(collision, {
-			layer: 1,
-			mask: 15,
-			type: "COLLISION",
-		});
+		expect(collision).toMatchInlineSnapshot(`
+		{
+		  "layer": 1,
+		  "mask": 15,
+		  "type": "COLLISION",
+		}
+	`);
 	});
 });

@@ -1,5 +1,4 @@
-import assert from "node:assert";
-import { describe, it } from "node:test";
+import { describe, expect, it } from "@jest/globals";
 import { createRectangle, intersects } from "./rectangle";
 
 describe("intersects", () => {
@@ -7,13 +6,17 @@ describe("intersects", () => {
 		const a = createRectangle(0, 0, 10, 10);
 		const b = createRectangle(5, 5, 10, 10);
 
-		assert.ok(intersects(a, b));
+		const result = intersects(a, b);
+
+		expect(result).toBe(true);
 	});
 
 	it("returns false if rectangles do not intersect", () => {
 		const a = createRectangle(0, 0, 10, 10);
 		const b = createRectangle(11, 11, 10, 10);
 
-		assert.ok(!intersects(a, b));
+		const result = intersects(a, b);
+
+		expect(result).toBe(false);
 	});
 });

@@ -1,5 +1,4 @@
-import assert from "node:assert";
-import { describe, it, mock } from "node:test";
+import { describe, expect, it, jest } from "@jest/globals";
 import type { System } from "./system";
 import {
 	createEntity,
@@ -15,8 +14,8 @@ describe("createEntity", () => {
 
 		const entity = createEntity(world);
 
-		assert.strictEqual(entity.id, 0);
-		assert.strictEqual(entity.components.size, 0);
+		expect(entity.id).toBe(0);
+		expect(entity.components.size).toBe(0);
 	});
 
 	it("increments the world's lastId", () => {
@@ -26,29 +25,29 @@ describe("createEntity", () => {
 		createEntity(world);
 		createEntity(world);
 
-		assert.strictEqual(world.lastId, 3);
+		expect(world.lastId).toBe(3);
 	});
 
 	it("adds the entity to the world's entities", () => {
 		const world = createWorld();
-		assert.strictEqual(world.entities.length, 0);
+		expect(world.entities.length).toBe(0);
 
 		const entity = createEntity(world);
 
-		assert.strictEqual(world.entities.length, 1);
-		assert.strictEqual(world.entities[0], entity);
+		expect(world.entities.length).toBe(1);
+		expect(world.entities[0]).toEqual(entity);
 	});
 });
 
 describe("dispatchWorldEvent", () => {
 	it("appends event to the existing world's events", () => {
 		const world = createWorld();
-		assert.strictEqual(world.events.length, 0);
+		expect(world.entities.length).toBe(0);
 		const event = new Event("test");
 
 		queueEvent(world, event);
 
-		assert.strictEqual(world.events.length, 1);
+		expect(world.events).toHaveLength(1);
 	});
 });
 
@@ -61,11 +60,11 @@ describe("update", () => {
 		});
 
 		queueEvent(world, event);
-		assert.strictEqual(world.events.length, 1);
+		expect(world.events).toHaveLength(1);
 
 		update(world, 0);
 
-		assert.strictEqual(world.events.length, 0);
+		expect(world.events).toHaveLength(0);
 		return listener;
 	});
 
@@ -82,22 +81,23 @@ describe("update", () => {
 		});
 
 		queueEvent(world, event1);
-		assert.strictEqual(world.events.length, 1);
-		assert.strictEqual(world.events[0], event1);
+		expect(world.events).toHaveLength(1);
+		expect(world.events[0]).toBe(event1);
 		update(world, 0);
-		assert.strictEqual(world.events.length, 1);
-		assert.strictEqual(world.events[0], event2);
+		expect(world.events).toHaveLength(1);
+		expect(world.events[0]).toBe(event2);
 		update(world, 0);
-		assert.strictEqual(world.events.length, 0);
+		expect(world.events).toHaveLength(0);
 
 		return listener;
 	});
 
 	it("updates all systems", () => {
+		expect.assertions(5);
 		const world = createWorld();
-		const executeMock = mock.fn<System["execute"]>((entities, deltaTime) => {
-			assert.strictEqual(entities.length, 0);
-			assert.strictEqual(deltaTime, 0);
+		const executeMock = jest.fn<System["execute"]>((entities, deltaTime) => {
+			expect(entities).toHaveLength(0);
+			expect(deltaTime).toBe(0);
 		});
 		const system1 = {
 			execute: executeMock,
@@ -109,6 +109,6 @@ describe("update", () => {
 		world.systems.push(system1, system2);
 		update(world, 0);
 
-		assert.strictEqual(executeMock.mock.callCount(), 2);
+		expect(executeMock).toBeCalledTimes(2);
 	});
 });

@@ -45,7 +45,13 @@
 	},
 	"overrides": [
 		{
-			"files": ["vite.config.ts"],
+			"files": ["*.js"],
+			"env": {
+				"node": true
+			}
+		},
+		{
+			"files": ["jest.config.js", "vite.config.ts"],
 			"parserOptions": {
 				"project": "./tsconfig.node.json"
 			}
