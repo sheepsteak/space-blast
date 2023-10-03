@@ -17,3 +17,17 @@ export class LevelStart extends Event {
 		this.level = level;
 	}
 }
+
+export class CollisionEvent extends Event {
+	static type = "collision";
+
+	readonly entityId: number;
+	readonly otherEntityId: number;
+
+	constructor(entityId: number, otherEntityId: number) {
+		super("collision");
+
+		this.entityId = entityId;
+		this.otherEntityId = otherEntityId;
+	}
+}
