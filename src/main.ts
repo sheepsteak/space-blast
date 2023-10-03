@@ -20,26 +20,27 @@ if (context == null) {
 setupContext(context, window.devicePixelRatio, GAME_HEIGHT, GAME_WIDTH);
 
 const keyboardListener = createKeyboardListener();
-const sprites = await loadSprites({
+
+void loadSprites({
 	sprites: [
 		["asteroid", asteroidSprite],
 		["background", backgroundSprite],
 		["bullet", bulletSprite],
 		["player", playerSprite],
 	],
+}).then((sprites) => {
+	const gameStateManager = createGameStateManager();
+	const playState = createPlayState({ context, keyboardListener, sprites });
+	gameStateManager.changeState(playState);
+
+	let lastTime = 0;
+	const tick: FrameRequestCallback = (time) => {
+		const timeInMs = time / 1000;
+		const delta = timeInMs - lastTime;
+		lastTime = timeInMs;
+		gameStateManager.update(delta);
+		gameStateManager.render(delta);
+		requestAnimationFrame(tick);
+	};
+	tick(0);
 });
-
-const gameStateManager = createGameStateManager();
-const playState = createPlayState({ context, keyboardListener, sprites });
-gameStateManager.changeState(playState);
-
-let lastTime = 0;
-const tick: FrameRequestCallback = (time) => {
-	const timeInMs = time / 1000;
-	const delta = timeInMs - lastTime;
-	lastTime = timeInMs;
-	gameStateManager.update(delta);
-	gameStateManager.render(delta);
-	requestAnimationFrame(tick);
-};
-tick(0);
