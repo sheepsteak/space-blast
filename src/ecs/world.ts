@@ -5,6 +5,7 @@ import type { System } from "./system";
 export type World = {
 	entities: Entity[];
 	eventEmitter: EventTarget;
+	events: Event[];
 	lastId: number;
 	renderSystems: System[];
 	systems: System[];
@@ -15,6 +16,7 @@ export type WorldEventListener<TEvent extends Event> = (event: TEvent) => void;
 export const createWorld = (): World => ({
 	entities: [],
 	eventEmitter: new EventTarget(),
+	events: [],
 	lastId: 0,
 	renderSystems: [],
 	systems: [],
@@ -47,6 +49,11 @@ export const addSystem = (world: World, system: System): World => {
 };
 
 export const update = (world: World, deltaTime: number): void => {
+	// Dispatch all events before updating systems
+	const events = world.events.slice();
+	world.events.length = 0;
+	events.forEach((event) => world.eventEmitter.dispatchEvent(event));
+
 	world.systems.forEach((system) => system.execute(world.entities, deltaTime));
 };
 
@@ -76,5 +83,5 @@ export const dispatchWorldEvent = <TEvent extends Event>(
 	world: World,
 	event: TEvent,
 ): void => {
-	world.eventEmitter.dispatchEvent(event);
+	world.events.push(event);
 };
