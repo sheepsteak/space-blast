@@ -17,6 +17,7 @@ import { createPlayerEntity } from "./entities";
 import { GameStartEvent } from "./events";
 import { createAsteroidSpawnerSystem } from "./systems/asteroid-spawner";
 import { createBoundsSystem } from "./systems/bounds";
+import { createCollisionSystem } from "./systems/collision";
 import { createGameSystem } from "./systems/game-system";
 import { createInputCommandsSystem } from "./systems/input-commands";
 import { createInputProcessSystem } from "./systems/input-process";
@@ -42,6 +43,7 @@ export const createPlayState = ({
 	addSystem(world, createInputCommandsSystem({ keyboardListener }));
 	addSystem(world, createInputProcessSystem({ world }));
 	addSystem(world, createMoveSystem());
+	addSystem(world, createCollisionSystem({ world }));
 	addSystem(world, createBoundsSystem());
 	addRenderSystem(world, createRenderSystem({ context, sprites }));
 
