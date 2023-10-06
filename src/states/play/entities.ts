@@ -1,5 +1,11 @@
 import { createAcceleration } from "../../components/acceleration";
 import { createAsteroid } from "../../components/asteroid";
+import {
+	collisionLayer1,
+	collisionLayer2,
+	collisionLayer3,
+	createCollision,
+} from "../../components/collision";
 import { createFriction } from "../../components/friction";
 import { createInput } from "../../components/input";
 import { createLifetime } from "../../components/lifetime";
@@ -39,6 +45,13 @@ export const createAsteroidEntity = ({
 
 	const asteroid = createEntity(world);
 	addEntityComponent(asteroid, createAcceleration());
+	addEntityComponent(
+		asteroid,
+		createCollision({
+			layer: collisionLayer2,
+			mask: [collisionLayer1, collisionLayer3],
+		}),
+	);
 	addEntityComponent(asteroid, createAsteroid());
 	addEntityComponent(asteroid, createFriction(1));
 	addEntityComponent(asteroid, createPosition({ x, y }));
@@ -71,6 +84,10 @@ export const createPlayerBulletEntity = ({
 }: CreateBulletArgs): Entity => {
 	const bullet = createEntity(world);
 	addEntityComponent(bullet, createAcceleration());
+	addEntityComponent(
+		bullet,
+		createCollision({ layer: collisionLayer3, mask: [collisionLayer2] }),
+	);
 	addEntityComponent(bullet, createFriction(1));
 	addEntityComponent(bullet, createLifetime(1));
 	addEntityComponent(bullet, createPlayerBullet());
@@ -104,6 +121,10 @@ export const createPlayerEntity = ({
 }: CreatePlayerArgs): Entity => {
 	const player = createEntity(world);
 	addEntityComponent(player, createAcceleration());
+	addEntityComponent(
+		player,
+		createCollision({ layer: collisionLayer1, mask: [collisionLayer2] }),
+	);
 	addEntityComponent(player, createFriction(0.99));
 	addEntityComponent(player, createPosition({ x, y }));
 	addEntityComponent(player, createRotation(toRadians(rotation)));
