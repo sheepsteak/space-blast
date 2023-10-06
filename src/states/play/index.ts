@@ -18,7 +18,7 @@ import { GameStartEvent } from "./events";
 import { createAsteroidSpawnerSystem } from "./systems/asteroid-spawner";
 import { createBoundsSystem } from "./systems/bounds";
 import { createCollisionSystem } from "./systems/collision";
-import { createGameSystem } from "./systems/game-system";
+import { createGameSystem } from "./systems/game";
 import { createInputCommandsSystem } from "./systems/input-commands";
 import { createInputProcessSystem } from "./systems/input-process";
 import { createLifetimeSystem } from "./systems/lifetime";
