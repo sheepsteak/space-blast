@@ -3,6 +3,7 @@ import { GameType } from "../../../components/game";
 import { GAME_HEIGHT, GAME_WIDTH } from "../../../contants";
 import { getEntityComponent, hasEntityComponents } from "../../../ecs/entity";
 import type { System } from "../../../ecs/system";
+import type { WorldEventListener } from "../../../ecs/world";
 import { subscribe, type World } from "../../../ecs/world";
 import { createAsteroidEntity } from "../entities";
 import { LevelStartEvent } from "../events";
@@ -14,7 +15,7 @@ export type CreateAsteroidSpawnerSystemArgs = {
 export const createAsteroidSpawnerSystem = ({
 	world,
 }: CreateAsteroidSpawnerSystemArgs): System => {
-	const handleLevelStart = () => {
+	const handleLevelStart: WorldEventListener<LevelStartEvent> = () => {
 		const gameEntity = world.entities.find((entity) =>
 			hasEntityComponents(entity, GameType),
 		);
