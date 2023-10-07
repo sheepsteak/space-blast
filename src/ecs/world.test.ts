@@ -3,6 +3,7 @@ import type { System } from "./system";
 import {
 	createEntity,
 	createWorld,
+	getEntity,
 	queueEvent,
 	subscribe,
 	update,
@@ -36,6 +37,26 @@ describe("createEntity", () => {
 
 		expect(world.entities.length).toBe(1);
 		expect(world.entities[0]).toEqual(entity);
+	});
+});
+
+describe("getEntity", () => {
+	it("returns the entity with the given id", () => {
+		const world = createWorld();
+		const entity = createEntity(world);
+
+		const result = getEntity(world, entity.id);
+
+		expect(result).toBe(entity);
+	});
+
+	it("returns undefined if no entity with the given id exists", () => {
+		const world = createWorld();
+		const entity = createEntity(world);
+
+		const result = getEntity(world, entity.id + 1);
+
+		expect(result).toBeUndefined();
 	});
 });
 

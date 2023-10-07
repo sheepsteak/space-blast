@@ -32,6 +32,9 @@ export const createEntity = (world: World): Entity => {
 	return entity;
 };
 
+export const getEntity = (world: World, id: Entity["id"]): Entity | undefined =>
+	world.entities.find((entity) => entity.id === id);
+
 export const removeEntity = (world: World, entity: Entity): void => {
 	world.entities.splice(world.entities.indexOf(entity), 1);
 };
