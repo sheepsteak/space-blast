@@ -31,3 +31,27 @@ export class CollisionEvent extends Event {
 		this.otherEntityId = otherEntityId;
 	}
 }
+
+export class PlayerDeathEvent extends Event {
+	static type = "playerdeath";
+
+	readonly entityId: number;
+
+	constructor(entityId: number) {
+		super("playerdeath");
+
+		this.entityId = entityId;
+	}
+}
+
+export class AsteroidDeathEvent extends Event {
+	static type = "asteroiddeath";
+
+	readonly entityId: number;
+
+	constructor(entityId: number) {
+		super("asteroiddeath");
+
+		this.entityId = entityId;
+	}
+}
