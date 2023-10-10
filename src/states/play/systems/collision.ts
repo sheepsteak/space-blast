@@ -25,8 +25,10 @@ export const createCollisionSystem = ({
 }: CreateCollisionSystemArgs): System => {
 	return {
 		execute: (entities) => {
-			const validEntities = entities.filter((entity) =>
-				hasEntityComponents(entity, CollisionType, PositionType, SizeType),
+			const validEntities = entities.filter(
+				(entity) =>
+					entity.isAlive &&
+					hasEntityComponents(entity, CollisionType, PositionType, SizeType),
 			);
 
 			const collisions: CollisionsList = [];
