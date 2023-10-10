@@ -17,6 +17,7 @@ describe("createEntity", () => {
 
 		expect(entity.id).toBe(0);
 		expect(entity.components.size).toBe(0);
+		expect(entity.isAlive).toBe(true);
 	});
 
 	it("increments the world's lastId", () => {

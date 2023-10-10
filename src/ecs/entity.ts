@@ -3,6 +3,7 @@ import type { Component } from "./component";
 export type Entity = {
 	readonly components: Map<Component["type"], Component>;
 	readonly id: number;
+	readonly isAlive: boolean;
 };
 
 export const addEntityComponent = (

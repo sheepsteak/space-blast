@@ -23,9 +23,10 @@ export const createWorld = (): World => ({
 });
 
 export const createEntity = (world: World): Entity => {
-	const entity = {
+	const entity: Entity = {
 		components: new Map<Component["type"], Component>(),
 		id: world.lastId++,
+		isAlive: true,
 	};
 	world.entities.push(entity);
 
