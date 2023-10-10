@@ -1,10 +1,12 @@
 import { describe, expect, it, jest } from "@jest/globals";
 import type { System } from "./system";
 import {
+	addSystem,
 	createEntity,
 	createWorld,
 	getEntity,
 	queueEvent,
+	removeEntity,
 	subscribe,
 	update,
 } from "./world";
@@ -132,5 +134,21 @@ describe("update", () => {
 		update(world, 0);
 
 		expect(executeMock).toBeCalledTimes(2);
+	});
+
+	it("removes entities marked as dead", () => {
+		const world = createWorld();
+		createEntity(world);
+		createEntity(world);
+		const system1: System = {
+			execute: (entities) => {
+				removeEntity(world, entities[1]);
+			},
+		};
+		addSystem(world, system1);
+
+		update(world, 0);
+
+		expect(world.entities).toHaveLength(1);
 	});
 });
