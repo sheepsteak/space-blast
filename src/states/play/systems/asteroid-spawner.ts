@@ -28,8 +28,8 @@ export const createAsteroidSpawnerSystem = ({
 
 		for (let i = 0; i < game.level + 3; i++) {
 			createAsteroidEntity({
-				rotation: Math.random() * (Math.PI * 4),
-				type: "large",
+				rotation: Math.random() * (Math.PI * 2),
+				type: "LARGE",
 				world,
 				x: Math.random() * GAME_WIDTH,
 				y: Math.random() * GAME_HEIGHT,

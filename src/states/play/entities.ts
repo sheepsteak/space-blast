@@ -1,4 +1,5 @@
 import { createAcceleration } from "../../components/acceleration";
+import type { AsteroidSize } from "../../components/asteroid";
 import { createAsteroid } from "../../components/asteroid";
 import {
 	collisionLayer1,
@@ -28,7 +29,7 @@ const PLAYER_BULLET_SPEED = 400;
 
 export type CreateAsteroidArgs = {
 	rotation: number;
-	type: "small" | "medium" | "large";
+	type: AsteroidSize;
 	world: World;
 	x: number;
 	y: number;
@@ -41,7 +42,7 @@ export const createAsteroidEntity = ({
 	x,
 	y,
 }: CreateAsteroidArgs): Entity => {
-	const size = type === "small" ? 16 : type === "medium" ? 32 : 64;
+	const size = type === "SMALL" ? 16 : type === "MEDIUM" ? 32 : 64;
 
 	const asteroid = createEntity(world);
 	addEntityComponent(asteroid, createAcceleration());
@@ -52,7 +53,7 @@ export const createAsteroidEntity = ({
 			mask: [collisionLayer1, collisionLayer3],
 		}),
 	);
-	addEntityComponent(asteroid, createAsteroid());
+	addEntityComponent(asteroid, createAsteroid({ size: type }));
 	addEntityComponent(asteroid, createFriction(1));
 	addEntityComponent(asteroid, createPosition({ x, y }));
 	addEntityComponent(asteroid, createRotation(rotation));
