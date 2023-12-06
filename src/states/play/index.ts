@@ -24,6 +24,7 @@ import { createInputProcessSystem } from "./systems/input-process";
 import { createLifetimeSystem } from "./systems/lifetime";
 import { createMoveSystem } from "./systems/move";
 import { createRenderSystem } from "./systems/render";
+import { createScoreSystem } from "./systems/score";
 
 export type CreatePlayStateArgs = {
 	context: CanvasRenderingContext2D;
@@ -45,6 +46,7 @@ export const createPlayState = ({
 	addSystem(world, createMoveSystem());
 	addSystem(world, createCollisionSystem({ world }));
 	addSystem(world, createBoundsSystem());
+	addSystem(world, createScoreSystem({ world }));
 	addRenderSystem(world, createRenderSystem({ context, sprites }));
 
 	const game = createEntity(world);
