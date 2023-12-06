@@ -1,14 +1,40 @@
+import { AsteroidType } from "../../../components/asteroid";
 import type { Game } from "../../../components/game";
 import { GameType } from "../../../components/game";
+import type { Lifetime } from "../../../components/lifetime";
+import { LifetimeType } from "../../../components/lifetime";
+import { PlayerBulletType } from "../../../components/player-bullet";
+import type { Entity } from "../../../ecs/entity";
 import { getEntityComponent, hasEntityComponent } from "../../../ecs/entity";
 import type { System } from "../../../ecs/system";
 import {
+	getEntity,
 	queueEvent,
 	subscribe,
 	type World,
 	type WorldEventListener,
 } from "../../../ecs/world";
-import { GameStartEvent, LevelStartEvent } from "../events";
+import {
+	AsteroidDeathEvent,
+	CollisionEvent,
+	GameStartEvent,
+	LevelStartEvent,
+	PlayerDeathEvent,
+} from "../events";
+
+const determineEntity = (
+	entityId: Entity,
+): "ASTEROID" | "PLAYER_BULLET" | "PLAYER" => {
+	if (hasEntityComponent(entityId, AsteroidType)) {
+		return "ASTEROID";
+	}
+
+	if (hasEntityComponent(entityId, PlayerBulletType)) {
+		return "PLAYER_BULLET";
+	}
+
+	return "PLAYER";
+};
 
 const getGameComponent = (world: World): Game => {
 	const gameEntity = world.entities.find((entity) =>
@@ -26,6 +52,51 @@ export type CreateGameSystemArgs = {
 };
 
 export const createGameSystem = ({ world }: CreateGameSystemArgs): System => {
+	const handleCollision: WorldEventListener<CollisionEvent> = (e) => {
+		const firstEntity = getEntity(world, e.entityId);
+		const secondEntity = getEntity(world, e.otherEntityId);
+
+		if (!firstEntity || !secondEntity) {
+			return;
+		}
+
+		const firstEntityType = determineEntity(firstEntity);
+		const secondEntityType = determineEntity(secondEntity);
+		const game = getGameComponent(world);
+
+		if (
+			(firstEntityType === "PLAYER" && secondEntityType === "ASTEROID") ||
+			(firstEntityType === "ASTEROID" && secondEntityType === "PLAYER")
+		) {
+			const playerEntity =
+				firstEntityType === "PLAYER" ? firstEntity : secondEntity;
+
+			game.lives -= 1;
+
+			queueEvent(world, new PlayerDeathEvent(playerEntity.id));
+		}
+
+		if (
+			(firstEntityType === "PLAYER_BULLET" &&
+				secondEntityType === "ASTEROID") ||
+			(firstEntityType === "ASTEROID" && secondEntityType === "PLAYER_BULLET")
+		) {
+			const asteroidEntity =
+				firstEntityType === "ASTEROID" ? firstEntity : secondEntity;
+			const playerBulletEntity =
+				firstEntityType === "PLAYER_BULLET" ? firstEntity : secondEntity;
+
+			const playerBulletLifetime = getEntityComponent<Lifetime>(
+				playerBulletEntity,
+				LifetimeType,
+			);
+
+			playerBulletLifetime.value = 0;
+
+			queueEvent(world, new AsteroidDeathEvent(asteroidEntity.id));
+		}
+	};
+
 	const handleGameStart: WorldEventListener<GameStartEvent> = () => {
 		const game = getGameComponent(world);
 		game.hasStarted = true;
@@ -34,6 +105,7 @@ export const createGameSystem = ({ world }: CreateGameSystemArgs): System => {
 		queueEvent(world, new LevelStartEvent(1));
 	};
 
+	subscribe(world, CollisionEvent.type, handleCollision);
 	subscribe(world, GameStartEvent.type, handleGameStart);
 
 	return {
