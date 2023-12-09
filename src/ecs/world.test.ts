@@ -1,4 +1,4 @@
-import { describe, expect, it, jest } from "@jest/globals";
+import { describe, expect, it, vi } from "vitest";
 import type { System } from "./system";
 import {
 	addSystem,
@@ -119,10 +119,12 @@ describe("update", () => {
 	it("updates all systems", () => {
 		expect.assertions(5);
 		const world = createWorld();
-		const executeMock = jest.fn<System["execute"]>((entities, deltaTime) => {
-			expect(entities).toHaveLength(0);
-			expect(deltaTime).toBe(0);
-		});
+		const executeMock = vi.fn<Parameters<System["execute"]>>(
+			(entities, deltaTime) => {
+				expect(entities).toHaveLength(0);
+				expect(deltaTime).toBe(0);
+			},
+		);
 		const system1 = {
 			execute: executeMock,
 		};

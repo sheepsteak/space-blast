@@ -1,4 +1,4 @@
-import { describe, expect, it, jest } from "@jest/globals";
+import { describe, expect, it, vi } from "vitest";
 import {
 	collisionLayer1,
 	collisionLayer2,
@@ -9,20 +9,20 @@ import { createSize } from "../../../components/size";
 import { vector2Create } from "../../../core/vector2";
 import { addEntityComponent } from "../../../ecs/entity";
 import {
-	createWorld,
 	createEntity,
+	createWorld,
 	queueEvent,
 	removeEntity,
 } from "../../../ecs/world";
 import { CollisionEvent } from "../events";
 import { createCollisionSystem } from "./collision";
 
-jest.mock("../../../ecs/world", () => ({
-	...jest.requireActual<object>("../../../ecs/world"),
-	queueEvent: jest.fn(),
+vi.mock("../../../ecs/world", async (importOriginal) => ({
+	...(await importOriginal<object>()),
+	queueEvent: vi.fn(),
 }));
 
-const queueEventMock = queueEvent as jest.MockedFunction<typeof queueEvent>;
+const queueEventMock = vi.mocked(queueEvent);
 
 describe("CollisionSystem", () => {
 	it("does not queue a collision event if no entities collide", () => {
