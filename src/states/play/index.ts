@@ -23,6 +23,7 @@ import { createInputCommandsSystem } from "./systems/input-commands";
 import { createInputProcessSystem } from "./systems/input-process";
 import { createLifetimeSystem } from "./systems/lifetime";
 import { createMoveSystem } from "./systems/move";
+import { createPlayerSystem } from "./systems/player";
 import { createRenderSystem } from "./systems/render";
 import { createScoreSystem } from "./systems/score";
 
@@ -45,6 +46,7 @@ export const createPlayState = ({
 	addSystem(world, createInputProcessSystem({ world }));
 	addSystem(world, createMoveSystem());
 	addSystem(world, createCollisionSystem({ world }));
+	addSystem(world, createPlayerSystem({ world }));
 	addSystem(world, createBoundsSystem());
 	addSystem(world, createScoreSystem({ world }));
 	addRenderSystem(world, createRenderSystem({ context, sprites }));
