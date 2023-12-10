@@ -6,6 +6,7 @@ export type Game = {
 	hasStarted: boolean;
 	level: number;
 	lives: number;
+	playerDeadCountdown?: number | null;
 	score: number;
 	totalTime: number;
 	type: typeof GameType;
