@@ -10,6 +10,7 @@ import type { System } from "../../../ecs/system";
 import {
 	getEntity,
 	queueEvent,
+	removeEntity,
 	subscribe,
 	type World,
 	type WorldEventListener,
@@ -73,6 +74,7 @@ export const createGameSystem = ({ world }: CreateGameSystemArgs): System => {
 
 			game.lives -= 1;
 
+			removeEntity(world, playerEntity);
 			queueEvent(world, new PlayerDeathEvent(playerEntity.id));
 		}
 
