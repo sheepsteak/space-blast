@@ -7,7 +7,7 @@
 		"plugin:@typescript-eslint/recommended-type-checked",
 		"plugin:@typescript-eslint/stylistic-type-checked",
 		"plugin:typescript-sort-keys/recommended",
-		"plugin:prettier/recommended"
+		"prettier"
 	],
 	"parserOptions": {
 		"project": true,
