@@ -2,8 +2,6 @@ import type { Collision } from "../../../components/collision";
 import { CollisionType } from "../../../components/collision";
 import type { Position } from "../../../components/position";
 import { PositionType } from "../../../components/position";
-import type { Size } from "../../../components/size";
-import { SizeType } from "../../../components/size";
 import { createRectangle, intersects } from "../../../core/rectangle";
 import { getEntityComponent, hasEntityComponents } from "../../../ecs/entity";
 import type { System } from "../../../ecs/system";
@@ -28,7 +26,7 @@ export const createCollisionSystem = ({
 			const validEntities = entities.filter(
 				(entity) =>
 					entity.isAlive &&
-					hasEntityComponents(entity, CollisionType, PositionType, SizeType),
+					hasEntityComponents(entity, CollisionType, PositionType),
 			);
 
 			const collisions: CollisionsList = [];
@@ -36,13 +34,12 @@ export const createCollisionSystem = ({
 			validEntities.forEach((entity) => {
 				const collision = getEntityComponent<Collision>(entity, CollisionType);
 				const position = getEntityComponent<Position>(entity, PositionType);
-				const size = getEntityComponent<Size>(entity, SizeType);
 
 				const rectangle = createRectangle(
-					position.value.x - size.value.x / 2,
-					position.value.y - size.value.y / 2,
-					size.value.x,
-					size.value.y,
+					position.value.x - collision.size.x / 2,
+					position.value.y - collision.size.y / 2,
+					collision.size.x,
+					collision.size.y,
 				);
 
 				const possibleCollisions = validEntities.filter((otherEntity) => {
@@ -65,13 +62,16 @@ export const createCollisionSystem = ({
 						otherEntity,
 						PositionType,
 					);
-					const otherSize = getEntityComponent<Size>(otherEntity, SizeType);
+					const otherCollision = getEntityComponent<Collision>(
+						otherEntity,
+						CollisionType,
+					);
 
 					const otherRectangle = createRectangle(
-						otherPosition.value.x - otherSize.value.x / 2,
-						otherPosition.value.y - otherSize.value.y / 2,
-						otherSize.value.x,
-						otherSize.value.y,
+						otherPosition.value.x - otherCollision.size.x / 2,
+						otherPosition.value.y - otherCollision.size.y / 2,
+						otherCollision.size.x,
+						otherCollision.size.y,
 					);
 
 					if (

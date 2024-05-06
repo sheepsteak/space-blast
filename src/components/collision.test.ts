@@ -12,15 +12,20 @@ describe("createCollision", () => {
 		const collision = createCollision({
 			layer: collisionLayer1,
 			mask: [collisionLayer2],
+			size: { x: 10, y: 10 },
 		});
 
 		expect(collision).toMatchInlineSnapshot(`
-		{
-		  "layer": 1,
-		  "mask": 2,
-		  "type": "COLLISION",
-		}
-	`);
+			{
+			  "layer": 1,
+			  "mask": 2,
+			  "size": {
+			    "x": 10,
+			    "y": 10,
+			  },
+			  "type": "COLLISION",
+			}
+		`);
 	});
 
 	it("returns a Collision component with multiple masks", () => {
@@ -32,14 +37,19 @@ describe("createCollision", () => {
 				collisionLayer3,
 				collisionLayer4,
 			],
+			size: { x: 10, y: 10 },
 		});
 
 		expect(collision).toMatchInlineSnapshot(`
-		{
-		  "layer": 1,
-		  "mask": 15,
-		  "type": "COLLISION",
-		}
-	`);
+			{
+			  "layer": 1,
+			  "mask": 15,
+			  "size": {
+			    "x": 10,
+			    "y": 10,
+			  },
+			  "type": "COLLISION",
+			}
+		`);
 	});
 });

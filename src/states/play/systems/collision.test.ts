@@ -5,7 +5,6 @@ import {
 	createCollision,
 } from "../../../components/collision";
 import { createPosition } from "../../../components/position";
-import { createSize } from "../../../components/size";
 import { vector2Create } from "../../../core/vector2";
 import { addEntityComponent } from "../../../ecs/entity";
 import {
@@ -30,17 +29,23 @@ describe("CollisionSystem", () => {
 		const entity1 = createEntity(world);
 		addEntityComponent(
 			entity1,
-			createCollision({ layer: collisionLayer1, mask: [collisionLayer2] }),
+			createCollision({
+				layer: collisionLayer1,
+				mask: [collisionLayer2],
+				size: vector2Create(10, 10),
+			}),
 		);
 		addEntityComponent(entity1, createPosition(vector2Create(0, 0)));
-		addEntityComponent(entity1, createSize(vector2Create(10, 10)));
 		const entity2 = createEntity(world);
 		addEntityComponent(
 			entity2,
-			createCollision({ layer: collisionLayer2, mask: [collisionLayer1] }),
+			createCollision({
+				layer: collisionLayer2,
+				mask: [collisionLayer1],
+				size: vector2Create(10, 10),
+			}),
 		);
 		addEntityComponent(entity2, createPosition(vector2Create(20, 20)));
-		addEntityComponent(entity2, createSize(vector2Create(10, 10)));
 		const collisionSystem = createCollisionSystem({ world });
 
 		collisionSystem.execute([entity1, entity2], 0);
@@ -53,17 +58,23 @@ describe("CollisionSystem", () => {
 		const entity1 = createEntity(world);
 		addEntityComponent(
 			entity1,
-			createCollision({ layer: collisionLayer1, mask: [collisionLayer2] }),
+			createCollision({
+				layer: collisionLayer1,
+				mask: [collisionLayer2],
+				size: vector2Create(10, 10),
+			}),
 		);
 		addEntityComponent(entity1, createPosition(vector2Create(0, 0)));
-		addEntityComponent(entity1, createSize(vector2Create(10, 10)));
 		const entity2 = createEntity(world);
 		addEntityComponent(
 			entity2,
-			createCollision({ layer: collisionLayer2, mask: [collisionLayer1] }),
+			createCollision({
+				layer: collisionLayer2,
+				mask: [collisionLayer1],
+				size: vector2Create(10, 10),
+			}),
 		);
 		addEntityComponent(entity2, createPosition(vector2Create(5, 5)));
-		addEntityComponent(entity2, createSize(vector2Create(10, 10)));
 		const collisionSystem = createCollisionSystem({ world });
 
 		collisionSystem.execute([entity1, entity2], 0);
@@ -81,17 +92,23 @@ describe("CollisionSystem", () => {
 		removeEntity(world, entity1);
 		addEntityComponent(
 			entity1,
-			createCollision({ layer: collisionLayer1, mask: [collisionLayer2] }),
+			createCollision({
+				layer: collisionLayer1,
+				mask: [collisionLayer2],
+				size: vector2Create(10, 10),
+			}),
 		);
 		addEntityComponent(entity1, createPosition(vector2Create(0, 0)));
-		addEntityComponent(entity1, createSize(vector2Create(10, 10)));
 		const entity2 = createEntity(world);
 		addEntityComponent(
 			entity2,
-			createCollision({ layer: collisionLayer2, mask: [collisionLayer1] }),
+			createCollision({
+				layer: collisionLayer2,
+				mask: [collisionLayer1],
+				size: vector2Create(10, 10),
+			}),
 		);
 		addEntityComponent(entity2, createPosition(vector2Create(5, 5)));
-		addEntityComponent(entity2, createSize(vector2Create(10, 10)));
 		const collisionSystem = createCollisionSystem({ world });
 
 		collisionSystem.execute([entity1, entity2], 0);

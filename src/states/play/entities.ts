@@ -18,6 +18,7 @@ import { createSize } from "../../components/size";
 import { createSprite } from "../../components/sprite";
 import { createVelocity } from "../../components/velocity";
 import { createWeapon } from "../../components/weapon";
+import { vector2Create } from "../../core/vector2";
 import type { Entity } from "../../ecs/entity";
 import { addEntityComponent } from "../../ecs/entity";
 import type { World } from "../../ecs/world";
@@ -51,6 +52,7 @@ export const createAsteroidEntity = ({
 		createCollision({
 			layer: collisionLayer2,
 			mask: [collisionLayer1, collisionLayer3],
+			size: vector2Create(size * 0.75, size * 0.75),
 		}),
 	);
 	addEntityComponent(asteroid, createAsteroid({ size: type }));
@@ -87,7 +89,11 @@ export const createPlayerBulletEntity = ({
 	addEntityComponent(bullet, createAcceleration());
 	addEntityComponent(
 		bullet,
-		createCollision({ layer: collisionLayer3, mask: [collisionLayer2] }),
+		createCollision({
+			layer: collisionLayer3,
+			mask: [collisionLayer2],
+			size: vector2Create(8, 8),
+		}),
 	);
 	addEntityComponent(bullet, createFriction(1));
 	addEntityComponent(bullet, createLifetime(1));
@@ -124,7 +130,11 @@ export const createPlayerEntity = ({
 	addEntityComponent(player, createAcceleration());
 	addEntityComponent(
 		player,
-		createCollision({ layer: collisionLayer1, mask: [collisionLayer2] }),
+		createCollision({
+			layer: collisionLayer1,
+			mask: [collisionLayer2],
+			size: vector2Create(32, 32),
+		}),
 	);
 	addEntityComponent(player, createFriction(0.99));
 	addEntityComponent(player, createPosition({ x, y }));
