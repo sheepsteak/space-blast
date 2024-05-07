@@ -3,11 +3,11 @@
 ## Install
 
 ```sh
-yarn
+pnpm i
 ```
 
 ## Development
 
 ```sh
-yarn dev
+pnpm dev
 ```

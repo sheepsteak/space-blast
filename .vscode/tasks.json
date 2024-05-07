@@ -9,8 +9,8 @@
 				"isDefault": true
 			},
 			"problemMatcher": [],
-			"label": "yarn: test",
-			"detail": "yarn test"
+			"label": "pnpm: test",
+			"detail": "pnpm test"
 		}
 	]
 }
