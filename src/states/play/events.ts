@@ -55,3 +55,11 @@ export class AsteroidDeathEvent extends Event {
 		this.entityId = entityId;
 	}
 }
+
+export class GameOverEvent extends Event {
+	static type = "gameover";
+
+	constructor() {
+		super("gameover");
+	}
+}
