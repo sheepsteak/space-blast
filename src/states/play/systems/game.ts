@@ -105,6 +105,13 @@ export const createGameSystem = ({ world }: CreateGameSystemArgs): System => {
 		const game = getGameComponent(world);
 		game.hasStarted = true;
 		game.level = 1;
+		game.lives = 3;
+		game.score = 0;
+		game.totalTime = 0;
+
+		world.entities
+			.filter((entity) => hasEntityComponent(entity, AsteroidType))
+			.forEach((entity) => removeEntity(world, entity));
 
 		createPlayerEntity({
 			rotation: -90,
