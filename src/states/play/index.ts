@@ -13,7 +13,6 @@ import {
 	update,
 } from "../../ecs/world";
 import type { LoadSpritesResult } from "../../loader";
-import { createPlayerEntity } from "./entities";
 import { GameStartEvent } from "./events";
 import { createAsteroidSpawnerSystem } from "./systems/asteroid-spawner";
 import { createBoundsSystem } from "./systems/bounds";
@@ -53,12 +52,6 @@ export const createPlayState = ({
 
 	const game = createEntity(world);
 	addEntityComponent(game, createGame());
-	createPlayerEntity({
-		rotation: -90,
-		world,
-		x: GAME_WIDTH / 2,
-		y: GAME_HEIGHT / 2,
-	});
 
 	queueEvent(world, new GameStartEvent());
 

@@ -4,6 +4,7 @@ import { GameType } from "../../../components/game";
 import type { Lifetime } from "../../../components/lifetime";
 import { LifetimeType } from "../../../components/lifetime";
 import { PlayerBulletType } from "../../../components/player-bullet";
+import { GAME_HEIGHT, GAME_WIDTH } from "../../../contants";
 import type { Entity } from "../../../ecs/entity";
 import { getEntityComponent, hasEntityComponent } from "../../../ecs/entity";
 import type { System } from "../../../ecs/system";
@@ -15,6 +16,7 @@ import {
 	type World,
 	type WorldEventListener,
 } from "../../../ecs/world";
+import { createPlayerEntity } from "../entities";
 import {
 	AsteroidDeathEvent,
 	CollisionEvent,
@@ -103,6 +105,13 @@ export const createGameSystem = ({ world }: CreateGameSystemArgs): System => {
 		const game = getGameComponent(world);
 		game.hasStarted = true;
 		game.level = 1;
+
+		createPlayerEntity({
+			rotation: -90,
+			world,
+			x: GAME_WIDTH / 2,
+			y: GAME_HEIGHT / 2,
+		});
 
 		queueEvent(world, new LevelStartEvent(1));
 	};
