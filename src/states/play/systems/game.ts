@@ -20,6 +20,7 @@ import { createPlayerEntity } from "../entities";
 import {
 	AsteroidDeathEvent,
 	CollisionEvent,
+	GameOverEvent,
 	GameStartEvent,
 	LevelStartEvent,
 	PlayerDeathEvent,
@@ -74,9 +75,17 @@ export const createGameSystem = ({ world }: CreateGameSystemArgs): System => {
 			const playerEntity =
 				firstEntityType === "PLAYER" ? firstEntity : secondEntity;
 
+			removeEntity(world, playerEntity);
+
+			if (game.lives === 0) {
+				game.gameOverCountdown = 3;
+				game.state = "gameover";
+				queueEvent(world, new GameOverEvent());
+				return;
+			}
+
 			game.lives -= 1;
 
-			removeEntity(world, playerEntity);
 			queueEvent(world, new PlayerDeathEvent(playerEntity.id));
 		}
 
@@ -103,10 +112,10 @@ export const createGameSystem = ({ world }: CreateGameSystemArgs): System => {
 
 	const handleGameStart: WorldEventListener<GameStartEvent> = () => {
 		const game = getGameComponent(world);
-		game.hasStarted = true;
 		game.level = 1;
 		game.lives = 3;
 		game.score = 0;
+		game.state = "playing";
 		game.totalTime = 0;
 
 		world.entities
@@ -138,8 +147,27 @@ export const createGameSystem = ({ world }: CreateGameSystemArgs): System => {
 
 			const game = getEntityComponent<Game>(gameEntity, GameType);
 
-			if (game.hasStarted) {
-				game.totalTime += deltaTime;
+			switch (game.state) {
+				case "gameover": {
+					if (game.gameOverCountdown == null) {
+						return;
+					}
+
+					game.gameOverCountdown -= deltaTime;
+
+					if (game.gameOverCountdown <= 0) {
+						game.gameOverCountdown = null;
+						queueEvent(world, new GameStartEvent());
+					}
+					break;
+				}
+				case "paused":
+					break;
+				case "playing": {
+					game.totalTime += deltaTime;
+
+					break;
+				}
 			}
 		},
 	};

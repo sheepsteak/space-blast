@@ -8,7 +8,8 @@ import type { Size } from "../../../components/size";
 import { SizeType } from "../../../components/size";
 import type { Sprite } from "../../../components/sprite";
 import { SpriteType } from "../../../components/sprite";
-import { hasEntityComponents, getEntityComponent } from "../../../ecs/entity";
+import { GAME_HEIGHT, GAME_WIDTH } from "../../../contants";
+import { getEntityComponent, hasEntityComponents } from "../../../ecs/entity";
 import type { System } from "../../../ecs/system";
 import type { LoadSpritesResult } from "../../../loader";
 
@@ -69,5 +70,15 @@ export const createRenderSystem = ({
 		context.fillText(`Score: ${game.score}`, 10, 30);
 		context.fillText(`Lives: ${game.lives}`, 10, 60);
 		context.restore();
+
+		if (game.state === "gameover") {
+			context.save();
+			context.font = "40px Courier New";
+			context.fillStyle = "white";
+			context.textAlign = "center";
+			context.fillText("Game Over", GAME_WIDTH / 2, GAME_HEIGHT / 2);
+			context.restore();
+			return;
+		}
 	},
 });
