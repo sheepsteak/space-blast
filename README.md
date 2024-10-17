@@ -3,11 +3,11 @@
 ## Install
 
 ```sh
-pnpm i
+npm i
 ```
 
 ## Development
 
 ```sh
-pnpm dev
+npm run dev
 ```
