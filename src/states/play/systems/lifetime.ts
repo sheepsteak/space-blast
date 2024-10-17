@@ -6,24 +6,26 @@ import type { World } from "../../../ecs/world";
 import { removeEntity } from "../../../ecs/world";
 
 export type CreateLifetimeSystemArgs = {
-	world: World;
+  world: World;
 };
 
 export const createLifetimeSystem = ({
-	world,
+  world,
 }: CreateLifetimeSystemArgs): System => {
-	return {
-		execute: (entities, deltaTime) => {
-			entities
-				.filter((entity) => hasEntityComponents(entity, LifetimeType))
-				.forEach((entity) => {
-					const lifetime = getEntityComponent<Lifetime>(entity, LifetimeType);
-					lifetime.value -= deltaTime;
+  return {
+    execute: (entities, deltaTime) => {
+      for (const entity of entities) {
+        if (!hasEntityComponents(entity, LifetimeType)) {
+          continue;
+        }
 
-					if (lifetime.value <= 0) {
-						removeEntity(world, entity);
-					}
-				});
-		},
-	};
+        const lifetime = getEntityComponent<Lifetime>(entity, LifetimeType);
+        lifetime.value -= deltaTime;
+
+        if (lifetime.value <= 0) {
+          removeEntity(world, entity);
+        }
+      }
+    },
+  };
 };

@@ -1,38 +1,29 @@
 {
-	"name": "space-blast",
-	"private": true,
-	"version": "0.0.0",
-	"type": "module",
-	"engines": {
-		"node": "^22",
-		"npm": "^10"
-	},
-	"scripts": {
-		"dev": "vite",
-		"build": "tsc && vite build",
-		"lint": "eslint . --report-unused-disable-directives --max-warnings 0",
-		"preview": "vite preview",
-		"prepare": "husky install",
-		"test": "vitest run",
-		"test:watch": "vitest --watch"
-	},
-	"dependencies": {},
-	"devDependencies": {
-		"@types/node": "^22",
-		"@typescript-eslint/eslint-plugin": "^6.6.0",
-		"@typescript-eslint/parser": "^6.6.0",
-		"@vitejs/plugin-basic-ssl": "^1",
-		"eslint": "^8.48.0",
-		"eslint-config-prettier": "^9.0.0",
-		"eslint-plugin-import": "^2.28.1",
-		"eslint-plugin-sort-destructure-keys": "^1.5.0",
-		"eslint-plugin-sort-keys-fix": "^1.1.2",
-		"eslint-plugin-typescript-sort-keys": "^3.0.0",
-		"husky": "^8.0.3",
-		"lint-staged": "^14.0.1",
-		"prettier": "^3.0.3",
-		"typescript": "^5.2.2",
-		"vite": "^5",
-		"vitest": "^1"
-	}
+  "name": "space-blast",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "engines": {
+    "node": "^22",
+    "npm": "^10"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "biome check .",
+    "preview": "vite preview",
+    "prepare": "husky install",
+    "test": "vitest run",
+    "test:watch": "vitest --watch"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.3",
+    "@types/node": "^22",
+    "@vitejs/plugin-basic-ssl": "^1",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1",
+    "typescript": "^5.2.2",
+    "vite": "^5",
+    "vitest": "^1"
+  }
 }

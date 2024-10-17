@@ -9,25 +9,25 @@ export const collisionLayer3 = 1 << 2;
 export const collisionLayer4 = 1 << 3;
 
 export type Collision = {
-	layer: number;
-	mask: number;
-	size: Vector2;
-	type: typeof CollisionType;
+  layer: number;
+  mask: number;
+  size: Vector2;
+  type: typeof CollisionType;
 } & Component;
 
 export type CreateCollisionArgs = {
-	layer: number;
-	mask: number[];
-	size: Vector2;
+  layer: number;
+  mask: number[];
+  size: Vector2;
 };
 
 export const createCollision = ({
-	layer,
-	mask,
-	size,
+  layer,
+  mask,
+  size,
 }: CreateCollisionArgs): Collision => ({
-	layer,
-	mask: mask.reduce((acc, curr) => acc | curr, 0),
-	size,
-	type: CollisionType,
+  layer,
+  mask: mask.reduce((acc, curr) => acc | curr, 0),
+  size,
+  type: CollisionType,
 });

@@ -1,0 +1,12 @@
+{
+  "[javascript][javascriptreact][typescript][typescriptreact][css][markdown][json][jsonc][graphql]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "biome.enabled": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports.biome": "explicit",
+    "quickfix.biome": "explicit"
+  },
+  "eslint.enable": false,
+  "prettier.enable": false
+}

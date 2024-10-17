@@ -5,48 +5,47 @@ import { GameType } from "../../../components/game";
 import { getEntityComponent, hasEntityComponents } from "../../../ecs/entity";
 import type { System } from "../../../ecs/system";
 import {
-	getEntity,
-	subscribe,
-	type World,
-	type WorldEventListener,
+  type World,
+  type WorldEventListener,
+  getEntity,
+  subscribe,
 } from "../../../ecs/world";
 import { AsteroidDeathEvent } from "../events";
 
 export type CreateScoreSystemArgs = {
-	world: World;
+  world: World;
 };
 
 export const createScoreSystem = ({ world }: CreateScoreSystemArgs): System => {
-	const handleAsteroidDeath: WorldEventListener<AsteroidDeathEvent> = (e) => {
-		const asteroidEntity = getEntity(world, e.entityId);
-		const gameEntity = world.entities.find((entity) =>
-			hasEntityComponents(entity, GameType),
-		);
+  const handleAsteroidDeath: WorldEventListener<AsteroidDeathEvent> = (e) => {
+    const asteroidEntity = getEntity(world, e.entityId);
+    const gameEntity = world.entities.find((entity) =>
+      hasEntityComponents(entity, GameType),
+    );
 
-		if (!asteroidEntity || !gameEntity) {
-			return;
-		}
+    if (!asteroidEntity || !gameEntity) {
+      return;
+    }
 
-		const asteroid = getEntityComponent<Asteroid>(asteroidEntity, AsteroidType);
-		const game = getEntityComponent<Game>(gameEntity, GameType);
+    const asteroid = getEntityComponent<Asteroid>(asteroidEntity, AsteroidType);
+    const game = getEntityComponent<Game>(gameEntity, GameType);
 
-		switch (asteroid.size) {
-			case "LARGE":
-				game.score += 20;
-				break;
-			case "MEDIUM":
-				game.score += 50;
-				break;
-			case "SMALL":
-				game.score += 100;
-				break;
-		}
-	};
+    switch (asteroid.size) {
+      case "LARGE":
+        game.score += 20;
+        break;
+      case "MEDIUM":
+        game.score += 50;
+        break;
+      case "SMALL":
+        game.score += 100;
+        break;
+    }
+  };
 
-	subscribe(world, AsteroidDeathEvent.type, handleAsteroidDeath);
+  subscribe(world, AsteroidDeathEvent.type, handleAsteroidDeath);
 
-	return {
-		// eslint-disable-next-line @typescript-eslint/no-empty-function
-		execute: () => {},
-	};
+  return {
+    execute: () => {},
+  };
 };

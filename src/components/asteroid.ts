@@ -4,15 +4,15 @@ export type AsteroidSize = "SMALL" | "MEDIUM" | "LARGE";
 export const AsteroidType = "ASTEROID";
 
 export type Asteroid = {
-	size: AsteroidSize;
-	type: typeof AsteroidType;
+  size: AsteroidSize;
+  type: typeof AsteroidType;
 } & Component;
 
 export type CreateAsteroidArgs = {
-	size: AsteroidSize;
+  size: AsteroidSize;
 };
 
 export const createAsteroid = (args: CreateAsteroidArgs): Asteroid => ({
-	size: args.size,
-	type: AsteroidType,
+  size: args.size,
+  type: AsteroidType,
 });

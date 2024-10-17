@@ -5,26 +5,28 @@ import { getEntityComponent, hasEntityComponents } from "../../../ecs/entity";
 import type { System } from "../../../ecs/system";
 
 export const createBoundsSystem = (): System => {
-	return {
-		execute: (entities) => {
-			entities
-				.filter((entity) => hasEntityComponents(entity, PositionType))
-				.forEach((entity) => {
-					const position = getEntityComponent<Position>(entity, PositionType);
+  return {
+    execute: (entities) => {
+      for (const entity of entities) {
+        if (!hasEntityComponents(entity, PositionType)) {
+          continue;
+        }
 
-					if (position.value.x > GAME_WIDTH) {
-						position.value.x = 0;
-					}
-					if (position.value.x < 0) {
-						position.value.x = GAME_WIDTH;
-					}
-					if (position.value.y > GAME_HEIGHT) {
-						position.value.y = 0;
-					}
-					if (position.value.y < 0) {
-						position.value.y = GAME_HEIGHT;
-					}
-				});
-		},
-	};
+        const position = getEntityComponent<Position>(entity, PositionType);
+
+        if (position.value.x > GAME_WIDTH) {
+          position.value.x = 0;
+        }
+        if (position.value.x < 0) {
+          position.value.x = GAME_WIDTH;
+        }
+        if (position.value.y > GAME_HEIGHT) {
+          position.value.y = 0;
+        }
+        if (position.value.y < 0) {
+          position.value.y = GAME_HEIGHT;
+        }
+      }
+    },
+  };
 };

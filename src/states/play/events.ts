@@ -1,65 +1,65 @@
 export class GameStartEvent extends Event {
-	static type = "gamestart";
+  static type = "gamestart";
 
-	constructor() {
-		super("gamestart");
-	}
+  constructor() {
+    super("gamestart");
+  }
 }
 
 export class LevelStartEvent extends Event {
-	static type = "levelstart";
+  static type = "levelstart";
 
-	readonly level: number;
+  readonly level: number;
 
-	constructor(level: number) {
-		super("levelstart");
+  constructor(level: number) {
+    super("levelstart");
 
-		this.level = level;
-	}
+    this.level = level;
+  }
 }
 
 export class CollisionEvent extends Event {
-	static type = "collision";
+  static type = "collision";
 
-	readonly entityId: number;
-	readonly otherEntityId: number;
+  readonly entityId: number;
+  readonly otherEntityId: number;
 
-	constructor(entityId: number, otherEntityId: number) {
-		super("collision");
+  constructor(entityId: number, otherEntityId: number) {
+    super("collision");
 
-		this.entityId = entityId;
-		this.otherEntityId = otherEntityId;
-	}
+    this.entityId = entityId;
+    this.otherEntityId = otherEntityId;
+  }
 }
 
 export class PlayerDeathEvent extends Event {
-	static type = "playerdeath";
+  static type = "playerdeath";
 
-	readonly entityId: number;
+  readonly entityId: number;
 
-	constructor(entityId: number) {
-		super("playerdeath");
+  constructor(entityId: number) {
+    super("playerdeath");
 
-		this.entityId = entityId;
-	}
+    this.entityId = entityId;
+  }
 }
 
 export class AsteroidDeathEvent extends Event {
-	static type = "asteroiddeath";
+  static type = "asteroiddeath";
 
-	readonly entityId: number;
+  readonly entityId: number;
 
-	constructor(entityId: number) {
-		super("asteroiddeath");
+  constructor(entityId: number) {
+    super("asteroiddeath");
 
-		this.entityId = entityId;
-	}
+    this.entityId = entityId;
+  }
 }
 
 export class GameOverEvent extends Event {
-	static type = "gameover";
+  static type = "gameover";
 
-	constructor() {
-		super("gameover");
-	}
+  constructor() {
+    super("gameover");
+  }
 }

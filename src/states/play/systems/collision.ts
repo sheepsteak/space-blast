@@ -10,94 +10,94 @@ import { queueEvent } from "../../../ecs/world";
 import { CollisionEvent } from "../events";
 
 type CollisionsList = {
-	entityId: number;
-	otherEntityId: number;
+  entityId: number;
+  otherEntityId: number;
 }[];
 
 export type CreateCollisionSystemArgs = {
-	world: World;
+  world: World;
 };
 
 export const createCollisionSystem = ({
-	world,
+  world,
 }: CreateCollisionSystemArgs): System => {
-	return {
-		execute: (entities) => {
-			const validEntities = entities.filter(
-				(entity) =>
-					entity.isAlive &&
-					hasEntityComponents(entity, CollisionType, PositionType),
-			);
+  return {
+    execute: (entities) => {
+      const validEntities = entities.filter(
+        (entity) =>
+          entity.isAlive &&
+          hasEntityComponents(entity, CollisionType, PositionType),
+      );
 
-			const collisions: CollisionsList = [];
+      const collisions: CollisionsList = [];
 
-			validEntities.forEach((entity) => {
-				const collision = getEntityComponent<Collision>(entity, CollisionType);
-				const position = getEntityComponent<Position>(entity, PositionType);
+      for (const entity of validEntities) {
+        const collision = getEntityComponent<Collision>(entity, CollisionType);
+        const position = getEntityComponent<Position>(entity, PositionType);
 
-				const rectangle = createRectangle(
-					position.value.x - collision.size.x / 2,
-					position.value.y - collision.size.y / 2,
-					collision.size.x,
-					collision.size.y,
-				);
+        const rectangle = createRectangle(
+          position.value.x - collision.size.x / 2,
+          position.value.y - collision.size.y / 2,
+          collision.size.x,
+          collision.size.y,
+        );
 
-				const possibleCollisions = validEntities.filter((otherEntity) => {
-					if (entity === otherEntity) {
-						return false;
-					}
+        const possibleCollisions = validEntities.filter((otherEntity) => {
+          if (entity === otherEntity) {
+            return false;
+          }
 
-					const otherCollision = getEntityComponent<Collision>(
-						otherEntity,
-						CollisionType,
-					);
+          const otherCollision = getEntityComponent<Collision>(
+            otherEntity,
+            CollisionType,
+          );
 
-					if ((otherCollision.mask & collision.layer) === collision.layer) {
-						return true;
-					}
-				});
+          if ((otherCollision.mask & collision.layer) === collision.layer) {
+            return true;
+          }
+        });
 
-				possibleCollisions.forEach((otherEntity) => {
-					const otherPosition = getEntityComponent<Position>(
-						otherEntity,
-						PositionType,
-					);
-					const otherCollision = getEntityComponent<Collision>(
-						otherEntity,
-						CollisionType,
-					);
+        for (const otherEntity of possibleCollisions) {
+          const otherPosition = getEntityComponent<Position>(
+            otherEntity,
+            PositionType,
+          );
+          const otherCollision = getEntityComponent<Collision>(
+            otherEntity,
+            CollisionType,
+          );
 
-					const otherRectangle = createRectangle(
-						otherPosition.value.x - otherCollision.size.x / 2,
-						otherPosition.value.y - otherCollision.size.y / 2,
-						otherCollision.size.x,
-						otherCollision.size.y,
-					);
+          const otherRectangle = createRectangle(
+            otherPosition.value.x - otherCollision.size.x / 2,
+            otherPosition.value.y - otherCollision.size.y / 2,
+            otherCollision.size.x,
+            otherCollision.size.y,
+          );
 
-					if (
-						intersects(rectangle, otherRectangle) &&
-						!collisions.some(
-							({ entityId, otherEntityId }) =>
-								(entityId === entity.id && otherEntityId === otherEntity.id) ||
-								(entityId === otherEntity.id && otherEntityId === entity.id),
-						)
-					) {
-						collisions.push({
-							entityId: entity.id,
-							otherEntityId: otherEntity.id,
-						});
-					}
-				});
-			});
+          if (
+            intersects(rectangle, otherRectangle) &&
+            !collisions.some(
+              ({ entityId, otherEntityId }) =>
+                (entityId === entity.id && otherEntityId === otherEntity.id) ||
+                (entityId === otherEntity.id && otherEntityId === entity.id),
+            )
+          ) {
+            collisions.push({
+              entityId: entity.id,
+              otherEntityId: otherEntity.id,
+            });
+          }
+        }
+      }
 
-			collisions.forEach((collision) => {
-				const collisionEvent = new CollisionEvent(
-					collision.entityId,
-					collision.otherEntityId,
-				);
+      for (const collision of collisions) {
+        const collisionEvent = new CollisionEvent(
+          collision.entityId,
+          collision.otherEntityId,
+        );
 
-				queueEvent(world, collisionEvent);
-			});
-		},
-	};
+        queueEvent(world, collisionEvent);
+      }
+    },
+  };
 };

@@ -1,3 +1,3 @@
 export type Component = {
-	type: string;
+  type: string;
 };

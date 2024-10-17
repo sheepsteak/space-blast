@@ -6,26 +6,28 @@ import type { System } from "../../../ecs/system";
 import { mappings } from "../../../input";
 
 export type CreateInputCommandsSystemArgs = {
-	keyboardListener: KeyboardListener;
+  keyboardListener: KeyboardListener;
 };
 
 export const createInputCommandsSystem = ({
-	keyboardListener,
+  keyboardListener,
 }: CreateInputCommandsSystemArgs): System => {
-	return {
-		execute: (entities) => {
-			entities
-				.filter((entity) => hasEntityComponents(entity, InputType))
-				.forEach((entity) => {
-					const input = getEntityComponent<Input>(entity, InputType);
+  return {
+    execute: (entities) => {
+      for (const entity of entities) {
+        if (!hasEntityComponents(entity, InputType)) {
+          continue;
+        }
 
-					input.commands.length = 0;
-					input.availableCommands.forEach((command) => {
-						if (keyboardListener.isPressed(mappings[command])) {
-							input.commands.push(command);
-						}
-					});
-				});
-		},
-	};
+        const input = getEntityComponent<Input>(entity, InputType);
+
+        input.commands.length = 0;
+        for (const command of input.availableCommands) {
+          if (keyboardListener.isPressed(mappings[command])) {
+            input.commands.push(command);
+          }
+        }
+      }
+    },
+  };
 };

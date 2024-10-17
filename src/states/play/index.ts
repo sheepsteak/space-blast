@@ -4,13 +4,13 @@ import type { KeyboardListener } from "../../core/keys";
 import type { GameState } from "../../core/state";
 import { addEntityComponent } from "../../ecs/entity";
 import {
-	addRenderSystem,
-	addSystem,
-	createEntity,
-	createWorld,
-	queueEvent,
-	render,
-	update,
+  addRenderSystem,
+  addSystem,
+  createEntity,
+  createWorld,
+  queueEvent,
+  render,
+  update,
 } from "../../ecs/world";
 import type { LoadSpritesResult } from "../../loader";
 import { GameStartEvent } from "./events";
@@ -27,45 +27,45 @@ import { createRenderSystem } from "./systems/render";
 import { createScoreSystem } from "./systems/score";
 
 export type CreatePlayStateArgs = {
-	context: CanvasRenderingContext2D;
-	keyboardListener: KeyboardListener;
-	sprites: LoadSpritesResult;
+  context: CanvasRenderingContext2D;
+  keyboardListener: KeyboardListener;
+  sprites: LoadSpritesResult;
 };
 
 export const createPlayState = ({
-	context,
-	keyboardListener,
-	sprites,
+  context,
+  keyboardListener,
+  sprites,
 }: CreatePlayStateArgs): GameState => {
-	const world = createWorld();
-	addSystem(world, createGameSystem({ world }));
-	addSystem(world, createAsteroidSpawnerSystem({ world }));
-	addSystem(world, createLifetimeSystem({ world }));
-	addSystem(world, createInputCommandsSystem({ keyboardListener }));
-	addSystem(world, createInputProcessSystem({ world }));
-	addSystem(world, createMoveSystem());
-	addSystem(world, createCollisionSystem({ world }));
-	addSystem(world, createPlayerSystem({ world }));
-	addSystem(world, createBoundsSystem());
-	addSystem(world, createScoreSystem({ world }));
-	addRenderSystem(world, createRenderSystem({ context, sprites }));
+  const world = createWorld();
+  addSystem(world, createGameSystem({ world }));
+  addSystem(world, createAsteroidSpawnerSystem({ world }));
+  addSystem(world, createLifetimeSystem({ world }));
+  addSystem(world, createInputCommandsSystem({ keyboardListener }));
+  addSystem(world, createInputProcessSystem({ world }));
+  addSystem(world, createMoveSystem());
+  addSystem(world, createCollisionSystem({ world }));
+  addSystem(world, createPlayerSystem({ world }));
+  addSystem(world, createBoundsSystem());
+  addSystem(world, createScoreSystem({ world }));
+  addRenderSystem(world, createRenderSystem({ context, sprites }));
 
-	const game = createEntity(world);
-	addEntityComponent(game, createGame());
+  const game = createEntity(world);
+  addEntityComponent(game, createGame());
 
-	queueEvent(world, new GameStartEvent());
+  queueEvent(world, new GameStartEvent());
 
-	return {
-		render(delta) {
-			context.drawImage(sprites.background, 0, 0, GAME_WIDTH, GAME_HEIGHT);
-			context.save();
+  return {
+    render(delta) {
+      context.drawImage(sprites.background, 0, 0, GAME_WIDTH, GAME_HEIGHT);
+      context.save();
 
-			render(world, delta);
+      render(world, delta);
 
-			context.restore();
-		},
-		update(delta) {
-			update(world, delta);
-		},
-	};
+      context.restore();
+    },
+    update(delta) {
+      update(world, delta);
+    },
+  };
 };

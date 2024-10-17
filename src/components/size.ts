@@ -4,11 +4,11 @@ import type { Component } from "../ecs/component";
 export const SizeType = "SIZE";
 
 export type Size = {
-	type: typeof SizeType;
-	value: Vector2;
+  type: typeof SizeType;
+  value: Vector2;
 } & Component;
 
 export const createSize = (value: Vector2): Size => ({
-	type: SizeType,
-	value,
+  type: SizeType,
+  value,
 });

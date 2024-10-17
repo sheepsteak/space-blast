@@ -9,58 +9,60 @@ import { PositionType } from "../../../components/position";
 import type { Velocity } from "../../../components/velocity";
 import { VelocityType } from "../../../components/velocity";
 import {
-	vector2Length,
-	vector2Normalize,
-	vector2Scale,
+  vector2Length,
+  vector2Normalize,
+  vector2Scale,
 } from "../../../core/vector2";
 import { getEntityComponent, hasEntityComponents } from "../../../ecs/entity";
 import type { System } from "../../../ecs/system";
 
 export const createMoveSystem = (): System => {
-	return {
-		execute: (entities, deltaTime) => {
-			entities
-				.filter((entity) =>
-					hasEntityComponents(
-						entity,
-						AccelerationType,
-						FrictionType,
-						PositionType,
-						VelocityType,
-					),
-				)
-				.forEach((entity) => {
-					const acceleration = getEntityComponent<Acceleration>(
-						entity,
-						AccelerationType,
-					);
-					const friction = getEntityComponent<Friction>(entity, FrictionType);
-					const position = getEntityComponent<Position>(entity, PositionType);
-					const velocity = getEntityComponent<Velocity>(entity, VelocityType);
-					let maxSpeed: MaxSpeed | undefined;
+  return {
+    execute: (entities, deltaTime) => {
+      for (const entity of entities) {
+        if (
+          !hasEntityComponents(
+            entity,
+            AccelerationType,
+            FrictionType,
+            PositionType,
+            VelocityType,
+          )
+        ) {
+          continue;
+        }
 
-					if (hasEntityComponents(entity, MaxSpeedType)) {
-						maxSpeed = getEntityComponent<MaxSpeed>(entity, MaxSpeedType);
-					}
+        const acceleration = getEntityComponent<Acceleration>(
+          entity,
+          AccelerationType,
+        );
+        const friction = getEntityComponent<Friction>(entity, FrictionType);
+        const position = getEntityComponent<Position>(entity, PositionType);
+        const velocity = getEntityComponent<Velocity>(entity, VelocityType);
+        let maxSpeed: MaxSpeed | undefined;
 
-					velocity.value.x += acceleration.value.x;
-					velocity.value.y += acceleration.value.y;
+        if (hasEntityComponents(entity, MaxSpeedType)) {
+          maxSpeed = getEntityComponent<MaxSpeed>(entity, MaxSpeedType);
+        }
 
-					if (
-						maxSpeed != null &&
-						vector2Length(velocity.value) > maxSpeed.value
-					) {
-						velocity.value = vector2Scale(
-							vector2Normalize(velocity.value),
-							maxSpeed.value,
-						);
-					}
+        velocity.value.x += acceleration.value.x;
+        velocity.value.y += acceleration.value.y;
 
-					velocity.value.x *= friction.value;
-					velocity.value.y *= friction.value;
-					position.value.x += velocity.value.x * deltaTime;
-					position.value.y += velocity.value.y * deltaTime;
-				});
-		},
-	};
+        if (
+          maxSpeed != null &&
+          vector2Length(velocity.value) > maxSpeed.value
+        ) {
+          velocity.value = vector2Scale(
+            vector2Normalize(velocity.value),
+            maxSpeed.value,
+          );
+        }
+
+        velocity.value.x *= friction.value;
+        velocity.value.y *= friction.value;
+        position.value.x += velocity.value.x * deltaTime;
+        position.value.y += velocity.value.y * deltaTime;
+      }
+    },
+  };
 };

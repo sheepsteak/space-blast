@@ -11,10 +11,10 @@ import { getEntityComponent, hasEntityComponents } from "../../../ecs/entity";
 import type { System } from "../../../ecs/system";
 import type { WorldEventListener } from "../../../ecs/world";
 import {
-	getEntity,
-	removeEntity,
-	subscribe,
-	type World,
+  type World,
+  getEntity,
+  removeEntity,
+  subscribe,
 } from "../../../ecs/world";
 import { getRandomNumber } from "../../../math";
 import { createAsteroidEntity } from "../entities";
@@ -22,69 +22,69 @@ import { AsteroidDeathEvent } from "../events";
 import { LevelStartEvent } from "../events";
 
 export type CreateAsteroidSpawnerSystemArgs = {
-	world: World;
+  world: World;
 };
 
 export const createAsteroidSpawnerSystem = ({
-	world,
+  world,
 }: CreateAsteroidSpawnerSystemArgs): System => {
-	const handleAsteroidDeath: WorldEventListener<AsteroidDeathEvent> = (e) => {
-		const asteroidEntity = getEntity(world, e.entityId);
+  const handleAsteroidDeath: WorldEventListener<AsteroidDeathEvent> = (e) => {
+    const asteroidEntity = getEntity(world, e.entityId);
 
-		if (!asteroidEntity) {
-			return;
-		}
+    if (!asteroidEntity) {
+      return;
+    }
 
-		const asteroid = getEntityComponent<Asteroid>(asteroidEntity, AsteroidType);
-		const position = getEntityComponent<Position>(asteroidEntity, PositionType);
-		const rotation = getEntityComponent<Rotation>(asteroidEntity, RotationType);
+    const asteroid = getEntityComponent<Asteroid>(asteroidEntity, AsteroidType);
+    const position = getEntityComponent<Position>(asteroidEntity, PositionType);
+    const rotation = getEntityComponent<Rotation>(asteroidEntity, RotationType);
 
-		if (asteroid.size === "LARGE" || asteroid.size === "MEDIUM") {
-			for (let i = 0; i < 2; i++) {
-				createAsteroidEntity({
-					rotation: getRandomNumber(
-						rotation.value - Math.PI / 2 + (i * Math.PI) / 2,
-						rotation.value + Math.PI / 2 + (i * Math.PI) / 2,
-					),
-					type: asteroid.size === "LARGE" ? "MEDIUM" : "SMALL",
-					world,
-					x: position.value.x,
-					y: position.value.y,
-				});
-			}
-		}
+    if (asteroid.size === "LARGE" || asteroid.size === "MEDIUM") {
+      for (let i = 0; i < 2; i++) {
+        createAsteroidEntity({
+          rotation: getRandomNumber(
+            rotation.value - Math.PI / 2 + (i * Math.PI) / 2,
+            rotation.value + Math.PI / 2 + (i * Math.PI) / 2,
+          ),
+          type: asteroid.size === "LARGE" ? "MEDIUM" : "SMALL",
+          world,
+          x: position.value.x,
+          y: position.value.y,
+        });
+      }
+    }
 
-		removeEntity(world, asteroidEntity);
-	};
+    removeEntity(world, asteroidEntity);
+  };
 
-	const handleLevelStart: WorldEventListener<LevelStartEvent> = () => {
-		const gameEntity = world.entities.find((entity) =>
-			hasEntityComponents(entity, GameType),
-		);
+  const handleLevelStart: WorldEventListener<LevelStartEvent> = () => {
+    const gameEntity = world.entities.find((entity) =>
+      hasEntityComponents(entity, GameType),
+    );
 
-		if (!gameEntity) {
-			return;
-		}
+    if (!gameEntity) {
+      return;
+    }
 
-		const game = getEntityComponent<Game>(gameEntity, GameType);
+    const game = getEntityComponent<Game>(gameEntity, GameType);
 
-		for (let i = 0; i < game.level + 3; i++) {
-			createAsteroidEntity({
-				rotation: Math.random() * (Math.PI * 2),
-				type: "LARGE",
-				world,
-				x: Math.random() * GAME_WIDTH,
-				y: Math.random() * GAME_HEIGHT,
-			});
-		}
-	};
+    for (let i = 0; i < game.level + 3; i++) {
+      createAsteroidEntity({
+        rotation: Math.random() * (Math.PI * 2),
+        type: "LARGE",
+        world,
+        x: Math.random() * GAME_WIDTH,
+        y: Math.random() * GAME_HEIGHT,
+      });
+    }
+  };
 
-	subscribe(world, AsteroidDeathEvent.type, handleAsteroidDeath);
-	subscribe(world, LevelStartEvent.type, handleLevelStart);
+  subscribe(world, AsteroidDeathEvent.type, handleAsteroidDeath);
+  subscribe(world, LevelStartEvent.type, handleLevelStart);
 
-	return {
-		execute: () => {
-			// do nothing
-		},
-	};
+  return {
+    execute: () => {
+      // do nothing
+    },
+  };
 };
